@@ -22,6 +22,15 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.room.index') }}"
+                        class="nav-link{{request()->is('admin/room*') ? ' active' : '' }}">
+                        <i class="nav-icon fas fa-swatchbook"></i>
+                        <p>
+                            Data Kamar
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

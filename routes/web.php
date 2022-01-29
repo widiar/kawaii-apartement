@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\RoomController;
+use App\Http\Controllers\SiteController;
+use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +17,9 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function (Request $request) {
-    return view('index');
+Route::redirect('/', 'id');
+Route::prefix('{language}')->group(function(){
+    Route::get('/', [SiteController::class, 'index']);
 });
 
 
@@ -28,5 +31,7 @@ Route::name('admin.')->group(function(){
         });
     
         Route::resource('banner', BannerController::class)->except('show');
+        Route::delete('room/image', [RoomController::class, 'deleteImage'])->name('room.delete.image');
+        Route::resource('room', RoomController::class);
     });
 });

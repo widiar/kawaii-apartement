@@ -40,17 +40,12 @@
     <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css') }}">
 
     <link rel="stylesheet" href="{{ asset('plugins/select2/css/select2.css') }}">
-    <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 
     <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.css') }}">
     <link rel="stylesheet" href="{{ asset('plugins/datepicker/css/bootstrap-datepicker.standalone.css') }}">
 
     @yield('css')
-    <style>
-        .description {
-            max-width: 300px;
-        }
-    </style>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
