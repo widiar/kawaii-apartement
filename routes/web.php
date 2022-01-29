@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\BannerController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +15,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
     return view('index');
+});
+
+
+//admin
+Route::name('admin.')->group(function(){
+    Route::prefix('admin')->group(function(){
+        Route::get('', function(){
+            return view('admin.dashboard');
+        });
+    
+        Route::resource('banner', BannerController::class)->except('show');
+    });
 });
