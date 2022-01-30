@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Banner;
+use App\Models\Room;
 use Illuminate\Http\Request;
 
 class SiteController extends Controller
@@ -10,6 +11,7 @@ class SiteController extends Controller
     public function index()
     {
         $banner = Banner::all();
-        return view('index', compact('banner'));
+        $rooms = Room::with('image')->get();
+        return view('index', compact('banner', 'rooms'));
     }
 }

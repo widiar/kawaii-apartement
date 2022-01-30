@@ -21,9 +21,9 @@ class SetLanguage
 
         if(in_array($request->language, $language)){
             App::setLocale($request->language);
-        } else{
-            App::setLocale('en');
-        }
+        } else if(!is_null($request->language)){
+            abort(404);
+        } 
         return $next($request);
     }
 }
