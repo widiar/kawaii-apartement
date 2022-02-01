@@ -24,6 +24,7 @@ class SetLanguage
         } else if(!is_null($request->language)){
             abort(404);
         } 
+        $request->route()->forgetParameter('language');
         return $next($request);
     }
 }

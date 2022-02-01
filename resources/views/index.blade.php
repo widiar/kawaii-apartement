@@ -86,10 +86,10 @@
                     <div class="hotel-content">
                         <div class="hotel-grid" style="background-image: url({{Storage::url('rooms/image/') . $room->image[0]->image}});">
                             <div class="price"><span>Rp {{ number_format($room->harga, 0, ',', '.') }} /{{ __('site.txt-night') }}</span></div>
-                            <a class="book-now text-center" href="#"><i class="ti-calendar"></i> {{ __('site.btn-book') }}</a>
+                            <a class="book-now text-center" href="{{ route('room.detail', [$lang, $room->id]) }}"><i class="ti-calendar"></i> {{ __('site.btn-book') }}</a>
                         </div>
                         <div class="desc">
-                            <h3><a href="#">{{ $room->jenis }}</a></h3>
+                            <h3><a href="{{ route('room.detail', [$lang, $room->id]) }}">{{ $room->jenis }}</a></h3>
                         </div>
                     </div>
                 </div>

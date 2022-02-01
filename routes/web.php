@@ -19,7 +19,9 @@ use Illuminate\Support\Facades\Route;
 */
 Route::redirect('/', 'id');
 Route::prefix('{language}')->group(function(){
-    Route::get('/', [SiteController::class, 'index']);
+    Route::get('/', [SiteController::class, 'index'])->name('home');
+
+    Route::get('rooms/{id}', [SiteController::class, 'roomDetail'])->name('room.detail');
 });
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        UrlGenerator::macro('setLanguage', function($language){
+            $currentRoute = app('router')->current();
+            $newRouteParameters = array_merge(
+                $currentRoute->parameters(), compact('language')
+            );
+            return $this->route($currentRoute->getName(), $newRouteParameters);
+        });
     }
 }

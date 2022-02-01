@@ -8407,7 +8407,7 @@ div.cs-select span {
 #fh5co-services-section,
 #fh5co-contact-section,
 #footer {
-  padding: 7em 0;
+  padding: 5em 0;
 }
 
 #hotel-facilities {
@@ -8788,7 +8788,7 @@ input[type="text"] {
 #footer {
   float: left;
   width: 100%;
-  font-size: 16px;
+  /* font-size: 16px; */
 }
 #footer a {
   color: #FF8FAB;

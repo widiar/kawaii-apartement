@@ -14,4 +14,10 @@ class SiteController extends Controller
         $rooms = Room::with('image')->get();
         return view('index', compact('banner', 'rooms'));
     }
+
+    public function roomDetail(Request $request, $id)
+    {
+        $room = Room::with('image')->find($id);
+        return view('site.room', compact('room'));
+    }
 }
