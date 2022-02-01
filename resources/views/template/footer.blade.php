@@ -43,6 +43,9 @@
 <!-- Flexslider -->
 <script src="{{ asset('js/jquery.flexslider-min.js') }}"></script>
 
-<script src="{{ asset('js/custom.js') }}"></script>
+<script src="{{ asset('plugins/venobox/venobox.min.js') }}"></script>
 
+<script src="{{ asset('js/custom.js') }}"></script>
+<script>
+</script>
 @yield('javascript')

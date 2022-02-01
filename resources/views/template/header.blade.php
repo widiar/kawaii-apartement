@@ -30,6 +30,8 @@
 	<link rel="stylesheet" href="{{ asset('css/icomoon.css') }}">
 	<!-- Flexslider  -->
 	<link rel="stylesheet" href="{{ asset('css/flexslider.css') }}">
+
+	<link rel="stylesheet" href="{{ asset('plugins/venobox/venobox.min.css') }}">
 	
 	<!-- Style -->
 	<link rel="stylesheet" href="{{ asset('css/style.css') }}">
