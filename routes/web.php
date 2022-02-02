@@ -22,6 +22,8 @@ Route::prefix('{language}')->group(function(){
     Route::get('/', [SiteController::class, 'index'])->name('home');
 
     Route::get('rooms/{id}', [SiteController::class, 'roomDetail'])->name('room.detail');
+
+    Route::post('reservasi/{id}', [SiteController::class, 'reservasi'])->name('room.reservasi');
 });
 
 

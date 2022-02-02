@@ -20,4 +20,10 @@ class SiteController extends Controller
         $room = Room::with('image')->find($id);
         return view('site.room', compact('room'));
     }
+
+    public function reservasi(Request $request, $id)
+    {
+        dd($request->all());
+        return response()->json($request->all());
+    }
 }

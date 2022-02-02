@@ -45,7 +45,34 @@
 
 <script src="{{ asset('plugins/venobox/venobox.min.js') }}"></script>
 
+<script src="{{ asset('plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+<script src="{{ asset('plugins/jquery-validation/additional-methods.min.js') }}"></script>
+
 <script src="{{ asset('js/custom.js') }}"></script>
 <script>
+    $.ajaxSetup({
+        headers: {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+        },
+    });
+    function toRupiah(value) {
+        let reverse = value.toString().split('').reverse().join('')
+        let val = reverse.match(/\d{1,3}/g)
+        val = val.join('.').split('').reverse().join('')
+        return val
+    }
+    jQuery.validator.setDefaults({
+        errorElement: 'span',
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback text-danger');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass('is-invalid');
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass('is-invalid');
+        }
+    });
 </script>
 @yield('javascript')

@@ -154,6 +154,10 @@ textarea {
   margin: 0;
 }
 
+.text-danger {
+  color: red;
+}
+
 button {
   overflow: visible;
 }

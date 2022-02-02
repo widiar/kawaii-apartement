@@ -139,7 +139,7 @@ $lang = app()->getLocale();
             <div class="col-md-4">
                 @foreach ($room->image as $item)
                 <a class="venobox" data-gall="roomPhotos" href="{{Storage::url('rooms/image/') . $item->image}}" style="display: {{ ($loop->first) ? '' : 'none' }}">
-                    <img src="{{Storage::url('rooms/image/') . $item->image}}" alt="" class="img-thumbnail w-100" style="height: 250px;object-fit: cover;object-position: center;">
+                    <img src="{{Storage::url('rooms/image/') . $item->image}}" alt="" class="img-thumbnail w-100" style="height: 300px;object-fit: cover;object-position: center;">
                 </a>
                 @endforeach
             </div>
@@ -162,7 +162,7 @@ $lang = app()->getLocale();
     </div>
 </div>
 
-<div class="modal fade" id="bayarModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="pembayaranModal" aria-hidden="true">
+<div class="modal fade" id="bayarModal" tabindex="-1" role="dialog" aria-labelledby="pembayaranModal" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -173,12 +173,12 @@ $lang = app()->getLocale();
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="">Tanggal Chekin</label>
-                        <input name="tanggal" id="tanggal" required type="text" class="form-control"
+                        <input name="checkin" id="checkin" autocomplete="off" required type="text" class="form-control tanggal"
                             value="{{ @$carts[0]->tanggal }}">
                     </div>
                     <div class="form-group">
                         <label for="">Tanggal Checkout</label>
-                        <input name="jam" id="jam" required type="text" class="form-control timepicker"
+                        <input name="checkout" id="checkout" autocomplete="off" disabled title="Harap Pilih Tanggal Checkin Terlebih Dahulu" required type="text" class="form-control tanggal"
                             value="{{ @$carts[0]->jam }}">
                     </div>
                     <div class="form-group">
@@ -187,15 +187,23 @@ $lang = app()->getLocale();
                             placeholder="Masukkan Nama Lengkap" value="{{ @$user->nama }}">
                     </div>
                     <div class="form-group">
-                        <label for="alamat">Alamat</label>
-                        <input type="text" required class="form-control" name="alamat" placeholder="Masukkan Alamat"
-                            value="{{ @$user->alamat }}">
+                        <label for="nik">NIK</label>
+                        <input type="text" required class="form-control" name="nik" placeholder="Masukkan NIK"
+                            value="{{ @$user->nik }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" required class="form-control" name="email"
+                            placeholder="Masukkan Email" value="{{ @$user->nama }}">
+                        <small class="text-info"><i>*Pastikan nik email aktif dikarenakan bukti pembayaran akan dikirimkan ke email</i></small><br>
                     </div>
                     <div class="form-group">
                         <label for="tlp">No. Telepon</label>
                         <input type="text" required class="form-control" name="tlp"
                             placeholder="Masukkan No. Telepon" value="{{ @$user->no_tlp }}">
                     </div>
+                    <input type="hidden" name="jumlahhari" id="hari">
+                    <input type="hidden" id="harga" value="{{ $room->harga }}">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -275,7 +283,10 @@ $lang = app()->getLocale();
 @endsection
 
 @section('javascript')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/datejs/1.0/date.min.js" integrity="sha512-/n/dTQBO8lHzqqgAQvy0ukBQ0qLmGzxKhn8xKrz4cn7XJkZzy+fAtzjnOQd5w55h4k1kUC+8oIe6WmrGUYwODA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
 <script>
+
 
     $('body').on('hidden.bs.modal', function () {
         if($('.modal.in').length > 0)
@@ -286,10 +297,57 @@ $lang = app()->getLocale();
 
     $(document).ready(function(){
         new VenoBox();
-        $('#form-reservasi').submit(function(e){
-            e.preventDefault()
-            $('#bayarModal').modal('hide')
-            $('#transaksiModal').modal('show')
+
+        $('#form-reservasi').validate({
+            rules: {
+                checkin: 'required',
+                checkout: 'required',
+                nama: 'required',
+                email: {
+                    required: true,
+                    email: true,
+                },
+                nik: {
+                    required: true,
+                    digits: true,
+                },
+                tlp: {
+                    required: true,
+                    digits: true,
+                }
+            },
+            submitHandler: (form, e) => {
+                e.preventDefault()
+
+                $('#bayarModal').modal('hide')
+                $('.bayar').text(toRupiah($('#hari').val() * $('#harga').val()))
+                $('#transaksiModal').modal('show')
+            }
+        })
+
+        $('#form-pembayaran').validate({
+            rules: {
+                bukti: 'required'
+            },
+            submitHandler: (form, e) => {
+                e.preventDefault()
+                //kasi swal
+                let dataform = new FormData($('#form-reservasi')[0])
+                dataform.append('bukti', $('#bukti')[0].files[0])
+                $.ajax({
+                    url: `{{ route('room.reservasi', [$lang, $room->id]) }}`,
+                    data: dataform,
+                    type: 'POST',
+                    contentType: false, 
+                    processData: false, 
+                    success: (res) => {
+                        console.log(res)
+                    }, 
+                    error: (err) => {
+                        console.log(err.responseJSON)
+                    }
+                })
+            }
         })
         $('#bukti').change(function(e){
 			let url = URL.createObjectURL(e.target.files[0])
@@ -300,6 +358,35 @@ $lang = app()->getLocale();
 			$('.img-modal-detail').attr('src', $(this).attr('src'))
 			$('#imageModal').modal('show')
 		})
+
+        $('.tanggal').datepicker({
+            startDate: "today",
+			dateFormat: 'yy-mm-dd',
+            orientation: 'auto bottom',
+            autoclose: true,
+        })
+
+        $("#checkin").datepicker({
+            startDate: "today",
+		}).on('changeDate', function(selected){
+            let minDate = new Date(selected.date.valueOf()).addDays(1);
+            $('#checkout').datepicker('setStartDate', minDate);
+        });
+
+        $('#checkin').change(function(){
+            $('#checkout').val(null)
+            if($(this).val() != ''){
+                $('#checkout').removeAttr('disabled')
+            }else{
+                $('#checkout').attr('disabled', 'disabled')
+            }
+        })
+
+        $('#checkout').datepicker().on('changeDate', function(selected){
+            let cekin = dayjs($("#checkin").val())
+            let cekot = dayjs(selected.date.valueOf())
+            $('#hari').val((cekot.diff(cekin, 'day')))
+        })
     })
 
     let slideIndex = 1;

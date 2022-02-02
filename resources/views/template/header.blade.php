@@ -7,6 +7,7 @@
 	<meta name="description" content="Kawaii Apartement" />
 	<meta name="keywords" content="kawaii, kawaii apartement, jimbaran" />
 	<meta name="author" content="Ari Widiarsana" />
+	<meta name="csrf-token" content="{{ csrf_token() }}">
 	
 	<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
 
