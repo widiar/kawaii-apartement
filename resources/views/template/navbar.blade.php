@@ -9,7 +9,7 @@
                     <ul class="sf-menu" id="fh5co-primary-menu">
                         <li><a class="{{ Route::currentRouteName() == 'home' ? 'active' : '' }}" href="{{ route('home', app()->getLocale()) }}">Home</a></li>
                         <li>
-                            <a href="hotel.html" class="fh5co-sub-ddown">{{ strtoupper(app()->getLocale()) }}</a>
+                            <a href="#" class="fh5co-sub-ddown">{{ strtoupper(app()->getLocale()) }}</a>
                             <ul class="fh5co-sub-menu">
                                  <li><a href="{{ $url->setLanguage('id') }}">ID</a></li>
                                  <li><a href="{{ $url->setLanguage('en') }}">EN</a></li>

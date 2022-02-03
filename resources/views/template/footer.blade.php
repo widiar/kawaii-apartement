@@ -48,6 +48,8 @@
 <script src="{{ asset('plugins/jquery-validation/jquery.validate.min.js') }}"></script>
 <script src="{{ asset('plugins/jquery-validation/additional-methods.min.js') }}"></script>
 
+<script src="{{ asset('plugins/sweetalert2/sweetalert2.all.min.js') }}"></script>
+
 <script src="{{ asset('js/custom.js') }}"></script>
 <script>
     $.ajaxSetup({

@@ -146,7 +146,7 @@ $lang = app()->getLocale();
             <div class="col-md-8">
                 <h1>{{ $room->jenis }}</h1>
                 <div class="fasilitas">
-                    <h2 style="margin: 0">Fasilitas</h2>
+                    <h2 style="margin: 0">{{ __('site.fasilitas') }}</h2>
                     <ul>
                         @foreach (explode("|", json_decode($room->fasilitas)->$lang) as $fs)
                             <li>{{ $fs }}</li>
@@ -154,9 +154,9 @@ $lang = app()->getLocale();
                     </ul>
                 </div>
                 <div class="price">
-                    <h2>Harga Rp 500.000</h2>
+                    <h2>{{ __('site.price') }} Rp {{ number_format($room->harga, 0, ',', '.') }}</h2>
                 </div>
-                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#bayarModal">Pesan Sekarang</button>
+                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#bayarModal">{{ __('site.btn-book') }}</button>
             </div>
         </div>
     </div>
@@ -172,42 +172,42 @@ $lang = app()->getLocale();
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
-                        <label for="">Tanggal Chekin</label>
+                        <label for="">{{ __('site.tanggal') }} Chekin</label>
                         <input name="checkin" id="checkin" autocomplete="off" required type="text" class="form-control tanggal"
                             value="{{ @$carts[0]->tanggal }}">
                     </div>
                     <div class="form-group">
-                        <label for="">Tanggal Checkout</label>
+                        <label for="">{{ __('site.tanggal') }} Checkout</label>
                         <input name="checkout" id="checkout" autocomplete="off" disabled title="Harap Pilih Tanggal Checkin Terlebih Dahulu" required type="text" class="form-control tanggal"
                             value="{{ @$carts[0]->jam }}">
                     </div>
                     <div class="form-group">
-                        <label for="nama">Nama Lengkap</label>
+                        <label for="nama">{{ __('site.nama') }}</label>
                         <input type="text" required class="form-control" name="nama"
-                            placeholder="Masukkan Nama Lengkap" value="{{ @$user->nama }}">
+                            placeholder="{{ __('site.masukkan') }} {{ __('site.nama') }}" value="{{ @$user->nama }}">
                     </div>
                     <div class="form-group">
                         <label for="nik">NIK</label>
-                        <input type="text" required class="form-control" name="nik" placeholder="Masukkan NIK"
+                        <input type="text" required class="form-control" name="nik" placeholder="{{ __('site.masukkan') }} NIK"
                             value="{{ @$user->nik }}">
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" required class="form-control" name="email"
-                            placeholder="Masukkan Email" value="{{ @$user->nama }}">
-                        <small class="text-info"><i>*Pastikan nik email aktif dikarenakan bukti pembayaran akan dikirimkan ke email</i></small><br>
+                            placeholder="{{ __('site.masukkan') }} Email" value="{{ @$user->nama }}">
+                        <small class="text-info"><i>*{{ __('site.info-email') }}</i></small><br>
                     </div>
                     <div class="form-group">
-                        <label for="tlp">No. Telepon</label>
+                        <label for="tlp">{{ __('site.telepon') }}</label>
                         <input type="text" required class="form-control" name="tlp"
-                            placeholder="Masukkan No. Telepon" value="{{ @$user->no_tlp }}">
+                            placeholder="{{ __('site.masukkan') }} {{ __('site.telepon') }}" value="{{ @$user->no_tlp }}">
                     </div>
                     <input type="hidden" name="jumlahhari" id="hari">
                     <input type="hidden" id="harga" value="{{ $room->harga }}">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Bayar</button>
+                    <button type="submit" class="btn btn-primary">{{ __('site.bayar') }}</button>
                 </div>
             </form>
         </div>
@@ -218,13 +218,13 @@ $lang = app()->getLocale();
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="pembayaranModal">Pembayaran</h3>
+                <h3 class="modal-title" id="pembayaranModal">{{ __('site.bayar') }}</h3>
             </div>
             <form action="#" method="POST" id="form-pembayaran"
                 enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
-                    <h3 class="text-center">Silahkan Transfer ke Bank BCA</h3>
+                    <h3 class="text-center">{{ __('site.trf-bank') }}</h3>
                     <h3 class="text-center">Total Rp <span class="bayar"></span></h3>
                     <div class="bank-container">
                         <div class="bank-img">
@@ -237,11 +237,11 @@ $lang = app()->getLocale();
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="bukti">Upload Bukti Pembayaran</label>
+                        <label for="bukti">{{ __('site.upload-bank') }}</label>
                         <div class="custom-file">
                             <input type="file" required name="bukti"
                                 class="file custom-file-input @error('bukti') is-invalid @enderror" id="bukti"
-                                value="{{ old('bukti') }}" accept="image/x-png, image/jpeg">
+                                value="{{ old('bukti') }}" accept="image/*">
                             <label class="custom-file-label" for="bukti">
                                 <span class="d-inline-block text-truncate w-75">Browse File</span>
                             </label>
@@ -251,13 +251,13 @@ $lang = app()->getLocale();
                         </div>
                         <small class="form-text text-muted">upload format file .png, .jpg max 5mb.</small>
                     </div>
-                    <img src="https://via.placeholder.com/1080x1080.png?text=BuktiBayar" alt=""
+                    <img src="https://via.placeholder.com/1080x1080.png?text={{ __('site.img-bukti') }}" alt=""
                         class="img-thumbnail img-detail">
-                    <small>Klik Gambar Untuk Lihat Detail</small>
+                    <small>{{ __('site.detail-img') }}</small>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Proses Pembayaran</button>
+                    <button type="submit" class="btn btn-primary">{{ __('site.proses-bayar') }}</button>
                 </div>
             </form>
         </div>
@@ -268,7 +268,7 @@ $lang = app()->getLocale();
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="pembayaranModal">Bukti Bayar</h3>
+                <h3 class="modal-title" id="pembayaranModal">{{ __('site.img-bukti') }}</h3>
             </div>
             <div class="modal-body">
                 <img src="" alt="" class="img-thumbnail img-modal-detail" style="width: 100%">
@@ -331,20 +331,39 @@ $lang = app()->getLocale();
             },
             submitHandler: (form, e) => {
                 e.preventDefault()
-                //kasi swal
                 let dataform = new FormData($('#form-reservasi')[0])
                 dataform.append('bukti', $('#bukti')[0].files[0])
-                $.ajax({
-                    url: `{{ route('room.reservasi', [$lang, $room->id]) }}`,
-                    data: dataform,
-                    type: 'POST',
-                    contentType: false, 
-                    processData: false, 
-                    success: (res) => {
-                        console.log(res)
-                    }, 
-                    error: (err) => {
-                        console.log(err.responseJSON)
+                //kasi swal
+                Swal.fire({
+                    title: 'Loading',
+                    timer: 20000,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        Swal.stopTimer()
+                        $.ajax({
+                            url: `{{ route('room.reservasi', [$lang, $room->id]) }}`,
+                            data: dataform,
+                            type: 'POST',
+                            contentType: false, 
+                            processData: false,
+                            success: (res) => {
+                                Swal.close()
+                                if(res.status == 'success') {
+                                    Swal.fire({
+                                        title: 'Success',
+                                        icon: 'success',
+                                        html: `{!! __('site.swal-bayar') !!}`,
+                                    }).then(res => {
+                                        if(res.isConfirmed) window.location.href = ''
+                                    })
+                                }
+                            },
+                            error: (err) => {
+                                console.log(err.responseJSON)
+                            }
+                        })
                     }
                 })
             }
