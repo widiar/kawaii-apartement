@@ -2,20 +2,17 @@
 # Pembayaran Berhasil !
 
 Pembayaran Sudah di Terima!<br>
-Terimakasih sudah melakukan booking di Pandan Sari.
+Terimakasih sudah melakukan reservasi di Kawaii Apartemen.
 
 No. Invoice :
 @component('mail::panel')
-<a href="{{ route('mail.invoice', ['nomor'=>$invoice->nomor]) }}" target="_blank">{{ $invoice->nomor }}</a>
+<a href="{{ route('mail.invoice', ['nomor'=>$data->inv]) }}" target="_blank">{{ $data->inv }}</a>
 @endcomponent
 
 @component('mail::table')
-| Wisata | Tanggal | Jumlah | Harga | Subtotal |
+| Kamar | Checkin | Checkout | Hari | Total Harga |
 | :------------- | :------------: | :------------: | :--------:| -------: |
-@foreach($invoice->cart as $cart)
-| {{ $cart->watersport->nama }} | {{ date('j F Y', strtotime($cart->tanggal)) . " " . $cart->jam }} | {{ $cart->jumlah }} | Rp {{ number_format($cart->satuan, 0, ',', '.') }} | Rp {{ number_format($cart->total, 0, ',', '.') }} |
-@endforeach
-| | | | <p style="text-align: left">Total</p> | <p style="color: rgb(255, 81, 0); text-align: right;"> Rp. {{ number_format($invoice->total, 0, ',', '.') }}</p> |
+| {{ $data->room->jenis }} | {{ date('j F Y', strtotime($data->checkin)) }} | {{ date('j F Y', strtotime($data->checkout)) }} | {{ $data->hari }} | Rp {{ number_format($data->total_harga, 0, ',', '.') }} |
 @endcomponent
 
 Bukti pembayaran ini merupakan bukti yang sah.

@@ -29,6 +29,7 @@ class SiteController extends Controller
             $totalHarga = $room->harga * $request->jumlahhari;
             $bukti = $request->bukti;
             $data = Reservasi::create([
+                'inv' => strtoupper(uniqid('INV/')),
                 'nama' => $request->nama,
                 'nik' => $request->nik,
                 'email' => $request->email,
@@ -48,5 +49,13 @@ class SiteController extends Controller
             $data->delete();
             return response()->json($th->getMessage(), 500);
         }
+    }
+    
+
+    public function invoiceMail(Request $request)
+    {
+        $inv = Reservasi::where('inv', urldecode($request->nomor))->where('is_approve', 1)->firstOrFail();
+        $inv->load('room');
+        return view('invoice-detail', compact('inv'));
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class PaymentApproveMail extends Mailable
+class PaymentRejectMail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -29,6 +29,6 @@ class PaymentApproveMail extends Mailable
      */
     public function build()
     {
-        return $this->subject('Bukti Pembayaran')->markdown('email.approve-payment');
+        return $this->subject('Pembayaran Tidak di Terima')->markdown('email.reject-payment');
     }
 }

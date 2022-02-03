@@ -15,6 +15,7 @@ class CreateReservasisTable extends Migration
     {
         Schema::create('reservasis', function (Blueprint $table) {
             $table->id();
+            $table->string('inv');
             $table->string('nama');
             $table->string('nik');
             $table->string('email');

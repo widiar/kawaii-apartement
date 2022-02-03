@@ -9,7 +9,7 @@
 	<meta name="author" content="Ari Widiarsana" />
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	
-	<link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+	<link rel="shortcut icon" href="{{ asset('images/logo.png') }}">
 
 	<!-- Stylesheets -->
 	<!-- Dropdown Menu -->

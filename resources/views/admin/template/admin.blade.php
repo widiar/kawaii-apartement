@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Favicons -->
-    <link href="{{ asset('gambar/logo.png') }}" rel="icon">
-    <link href="{{ asset('gambar/logo.png') }}" rel="apple-touch-icon">
+    <link href="{{ asset('images/logo.png') }}" rel="icon">
+    <link href="{{ asset('images/logo.png') }}" rel="apple-touch-icon">
 
     <title>Dashboard</title>
 
@@ -64,7 +64,7 @@
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a href="#" class="nav-link logout">Logout</a>
+                    <a href="{{ route('logout') }}" class="nav-link logout">Logout</a>
                 </li>
             </ul>
         </nav>
