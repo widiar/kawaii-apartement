@@ -1,6 +1,6 @@
 @extends('admin.template.admin')
 
-@section('title', 'Tambah Gallery')
+@section('title', 'Tambah Banner')
 
 @section('css')
 <style>
