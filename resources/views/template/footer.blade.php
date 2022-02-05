@@ -1,7 +1,7 @@
 <footer id="footer" class="fh5co-bg-color">
     <div class="container">
         <div class="text-center">
-            <p><small>&copy; 2016 Free HTML5 Template. <br> All Rights Reserved. <br>
+            <p><small>&copy; 2022 <a href="https://ariwidiarsana.web.app/">STIKOM BALI</a> <br> All Rights Reserved. <br>
             <ul class="social-icons">
                 <li>
                     <a href="#"><i class="icon-twitter-with-circle"></i></a>

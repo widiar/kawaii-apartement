@@ -24,7 +24,7 @@ class AdminLogin
             else
                 abort(403);
         } else{
-            return redirect()->route('home');
+            return redirect('/');
         }
     }
 }
