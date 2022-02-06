@@ -204,6 +204,7 @@ $lang = app()->getLocale();
                     </div>
                     <input type="hidden" name="jumlahhari" id="hari">
                     <input type="hidden" id="harga" value="{{ $room->harga }}">
+                    <input type="hidden" name="room" value="{{ $room->id }}">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -294,6 +295,7 @@ $lang = app()->getLocale();
             $('body').addClass('modal-open');
         }
     });
+    let urlCheck = `{{ route('api.check.room') }}`
 
     $(document).ready(function(){
         new VenoBox();
@@ -318,10 +320,40 @@ $lang = app()->getLocale();
             },
             submitHandler: (form, e) => {
                 e.preventDefault()
-
-                $('#bayarModal').modal('hide')
-                $('.bayar').text(toRupiah($('#hari').val() * $('#harga').val()))
-                $('#transaksiModal').modal('show')
+                console.log($(form).serialize())
+                Swal.fire({
+                    title: 'Checking',
+                    timer: 20000,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        Swal.stopTimer()
+                        $.ajax({
+                            url: urlCheck,
+                            data: $(form).serialize(),
+                            type: 'POST',
+                            success: (res) => {
+                                Swal.close()
+                                console.log(res)
+                                if(res.status == 200) {
+                                    $('#bayarModal').modal('hide')
+                                    $('.bayar').text(toRupiah($('#hari').val() * $('#harga').val()))
+                                    $('#transaksiModal').modal('show')
+                                } else {
+                                    Swal.fire({
+                                        title: 'Sorry',
+                                        icon: 'warning',
+                                        html: res.message,
+                                    })
+                                }
+                            },
+                            error: (err) => {
+                                console.log(err.responseJSON)
+                            }
+                        })
+                    }
+                })
             }
         })
 
@@ -380,7 +412,7 @@ $lang = app()->getLocale();
 
         $('.tanggal').datepicker({
             startDate: "today",
-			dateFormat: 'yy-mm-dd',
+			format: 'yyyy-mm-dd',
             orientation: 'auto bottom',
             autoclose: true,
         })

@@ -32,32 +32,32 @@
     <div class="container">
         <div class="row">
             <div id="availability">
-                <form action="#">
-
+                <form action="#" method="POST" id="form-check-ava">
+                    @csrf
                     <div class="a-col">
                         <section>
-                            <select class="cs-select cs-skin-border">
-                                <option value="" disabled selected>Select Hotel</option>
-                                <option value="email">Luxe Hotel</option>
-                                <option value="twitter">Deluxe Hotel</option>
-                                <option value="linkedin">Five Star Hotel</option>
+                            <select class="cs-select cs-skin-border" name="room" class="required">
+                                <option disabled value="" selected>Select Room</option>
+                                @foreach ($rooms as $room)
+                                    <option value="{{ $room->id }}">{{ $room->jenis }}</option>
+                                @endforeach
                             </select>
                         </section>
                     </div>
                     <div class="a-col alternate">
                         <div class="input-field">
                             <label for="date-start">Check In</label>
-                            <input type="text" class="form-control" id="date-start" />
+                            <input type="text" class="form-control tanggal" name="checkin" required />
                         </div>
                     </div>
                     <div class="a-col alternate">
                         <div class="input-field">
                             <label for="date-end">Check Out</label>
-                            <input type="text" class="form-control" id="date-end" />
+                            <input type="text" class="form-control tanggal" name="checkout" required />
                         </div>
                     </div>
                     <div class="a-col action">
-                        <a href="#">
+                        <a href="#" id="form-check">
                             <span>Check</span>
                             Availability
                         </a>
@@ -262,42 +262,81 @@
     </div>
 </div>
 
-<div id="testimonial">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="section-title text-center">
-                    <h2>Happy Customer Says...</h2>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="testimony">
-                    <blockquote>
-                        &ldquo;If you’re looking for a top quality hotel look no further. We were upgraded free of charge to the Premium Suite, thanks so much&rdquo;
-                    </blockquote>
-                    <p class="author"><cite>John Doe</cite></p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="testimony">
-                    <blockquote>
-                        &ldquo;Me and my wife had a delightful weekend get away here, the staff were so friendly and attentive. Highly Recommended&rdquo;
-                    </blockquote>
-                    <p class="author"><cite>Rob Smith</cite></p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="testimony">
-                    <blockquote>
-                        &ldquo;If you’re looking for a top quality hotel look no further. We were upgraded free of charge to the Premium Suite, thanks so much&rdquo;
-                    </blockquote>
-                    <p class="author"><cite>Jane Doe</cite></p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
+@endsection
+
+@section('javascript')
+<script>
+    let urlCheck = `{{ route('api.check.room') }}`
+
+    $.validator.addMethod("valueNotEquals", function(value, element, arg){
+        return arg !== value;
+    }, "Value must not equal arg.");
+
+    $('.tanggal').datepicker({
+        startDate: "today",
+        format: 'yyyy-mm-dd',
+        orientation: 'auto bottom',
+        autoclose: true,
+    })
+
+    $('#form-check-ava').validate({
+        rules: {
+            checkin: 'required',
+            checkout: 'required',
+            room: {
+                valueNotEquals: 'default'
+            },
+        },
+        submitHandler: (form, e) => {
+            e.preventDefault()
+            let checkselect = $('select[name="room"]').val()
+            if(checkselect == null) {
+                alert('Please select room')
+            } else {
+                Swal.fire({
+                    title: 'Checking',
+                    timer: 20000,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    didOpen: () => {
+                        Swal.showLoading()
+                        Swal.stopTimer()
+                        $.ajax({
+                            url: urlCheck,
+                            data: $(form).serialize(),
+                            type: 'POST',
+                            success: (res) => {
+                                Swal.close()
+                                console.log(res)
+                                if(res.status == 200) {
+                                    Swal.fire({
+                                        title: 'Check Room',
+                                        icon: 'success',
+                                        html: res.message,
+                                    })
+                                } else {
+                                    Swal.fire({
+                                        title: 'Check Room',
+                                        icon: 'warning',
+                                        html: res.message,
+                                    })
+                                }
+                            },
+                            error: (err) => {
+                                console.log(err.responseJSON)
+                            }
+                        })
+                    }
+                })
+            }
+        }
+    })
+
+    $('body').on('click', '#form-check', function(e){
+        e.preventDefault()
+        $('#form-check-ava').submit()
+        return
+    })
+</script>
 @endsection

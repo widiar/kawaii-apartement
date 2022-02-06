@@ -26,6 +26,12 @@ class SiteController extends Controller
     {
         try {
             $room = Room::find($id);
+            if($room->checkSisa($request->checkin) <= 0) {
+                return response()->json([
+                    'status' => 'room',
+                    'message' => 'Room not avaliable'
+                ]);
+            }
             $totalHarga = $room->harga * $request->jumlahhari;
             $bukti = $request->bukti;
             $data = Reservasi::create([
@@ -46,7 +52,7 @@ class SiteController extends Controller
                 'status' => 'success'
             ]);
         } catch (\Throwable $th) {
-            $data->delete();
+            // $data->delete();
             return response()->json($th->getMessage(), 500);
         }
     }
