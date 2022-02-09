@@ -40,7 +40,7 @@
                 <tr>
                     <td>{{ ++$no }}</td>
                     <td>{{ $dt->jenis }}</td>
-                    <td>{{ number_format($dt->harga, '0', '.') }}</td>
+                    <td>{{ number_format($dt->harga, '0', '.', '.') }}</td>
                     <td class="text-center">
                         <button data-id="{{ $dt->id }}" class="btn btn-sm btn-primary btn-detail"><i class="fas fa-eye"></i></button>
                     </td>
