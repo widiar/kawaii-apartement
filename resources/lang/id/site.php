@@ -22,5 +22,15 @@ return [
     'proses-bayar' => 'Proses Pembayaran',
     'img-bukti' => 'Bukti Bayar',
 
-    'swal-bayar' => 'Pembayaran berhasil. <br> Silahkan Menunggu 1x24 jam, Admin Akan Mengkonfirmasi Pembayaran Anda.'
+    'swal-bayar' => 'Pembayaran berhasil. <br> Silahkan Menunggu 1x24 jam, Admin Akan Mengkonfirmasi Pembayaran Anda.',
+
+    'facilities' => [
+        'title' => 'Fasilitas Kami',
+        '1' => 'Laundry',
+        '2' => 'Parking',
+        'text-1' => 'LoremLorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias officia perferendis modi impedit, rem quasi veritatis. Consectetur obcaecati incidunt, quae rerum, accusamus sapiente fuga vero at. Quia, labore, reprehenderit illum dolorem quae facilis reiciendis quas similique totam sequi ducimus temporibus ex nemo, omnis perferendis earum fugit impedit molestias animi vitae.',
+        'text-2' => 'LoremLorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias officia perferendis modi impedit, rem quasi veritatis. Consectetur obcaecati incidunt, quae rerum, accusamus sapiente fuga vero at. Quia, labore, reprehenderit illum dolorem quae facilis reiciendis quas similique totam sequi ducimus temporibus ex nemo, omnis perferendis earum fugit impedit molestias animi vitae.'
+    ],
+
+    'location' => 'Lokasi Kami',
 ];

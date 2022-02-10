@@ -1,13 +1,11 @@
 <footer id="footer" class="fh5co-bg-color">
     <div class="container">
         <div class="text-center">
-            <p><small>&copy; 2022 <a href="https://ariwidiarsana.web.app/">STIKOM BALI</a> <br> All Rights Reserved. <br>
+            <p><small>&copy; </small> 2022 <a href="https://ariwidiarsana.web.app/" target="_blank">STIKOM BALI</a> <br> All Rights Reserved. <br> </p>
             <ul class="social-icons">
                 <li>
-                    <a href="#"><i class="icon-twitter-with-circle"></i></a>
                     <a href="#"><i class="icon-facebook-with-circle"></i></a>
                     <a href="#"><i class="icon-instagram-with-circle"></i></a>
-                    <a href="#"><i class="icon-linkedin-with-circle"></i></a>
                 </li>
             </ul>
         </div>

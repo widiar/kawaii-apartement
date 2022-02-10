@@ -185,6 +185,11 @@ $(function(){
       });
    };
 
+   const copy = () => {
+      const element = $('footer .container div p')
+      element.html(`<small>&copy; </small> 2022 <a href="https://ariwidiarsana.web.app/" target="_blank">STIKOM BALI</a> <br> All Rights Reserved. <br>`)
+   }
+
    var sliderMain = function() {
       
       $('#fh5co-hero .flexslider').flexslider({
@@ -227,6 +232,7 @@ $(function(){
       contentWayPoint();
       mobileMenuOutsideClick();
       parallax();
+      copy();
       fullHeight();
       counter();
    });

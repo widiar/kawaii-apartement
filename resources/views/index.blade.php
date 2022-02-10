@@ -1,5 +1,7 @@
 @extends('template.master')
-
+@section('css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+@endsection
 @section('main-content')
 <aside id="fh5co-hero" class="js-fullheight">
     <div class="flexslider js-fullheight">
@@ -106,7 +108,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="section-title text-center">
-                    <h2>Our Facilities</h2>
+                    <h2>{{ __('site.facilities.title') }}</h2>
                 </div>
             </div>
         </div>
@@ -114,32 +116,12 @@
         <div id="tabs">
             <nav class="tabs-nav">
                 <a href="#" class="active" data-tab="tab1">
-                    <i class="flaticon-restaurant icon"></i>
-                    <span>Restaurant</span>
+                    <i class="fas fa-hands-wash icon"></i>
+                    <span>{{ __('site.facilities.1') }}</span>
                 </a>
                 <a href="#" data-tab="tab2">
-                    <i class="flaticon-cup icon"></i>
-                    <span>Bar</span>
-                </a>
-                <a href="#" data-tab="tab3">
-                
-                    <i class="flaticon-car icon"></i>
-                    <span>Pick-up</span>
-                </a>
-                <a href="#" data-tab="tab4">
-                    
-                    <i class="flaticon-swimming icon"></i>
-                    <span>Swimming Pool</span>
-                </a>
-                <a href="#" data-tab="tab5">
-                    
-                    <i class="flaticon-massage icon"></i>
-                    <span>Spa</span>
-                </a>
-                <a href="#" data-tab="tab6">
-                    
-                    <i class="flaticon-bicycle icon"></i>
-                    <span>Gym</span>
+                    <i class="fas fa-parking icon"></i>
+                    <span>{{ __('site.facilities.2') }}</span>
                 </a>
             </nav>
             <div class="tab-content-container">
@@ -147,17 +129,11 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6">
-                                <img src="images/tab_img_1.jpg" class="img-responsive" alt="Image">
+                                <img src="images/tab_img_1.jpg" class="img-responsive" alt="Image" style="width: 100%; height: 333px;">
                             </div>
                             <div class="col-md-6">
-                                <span class="super-heading-sm">World Class</span>
-                                <h3 class="heading">Restaurant</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias officia perferendis modi impedit, rem quasi veritatis. Consectetur obcaecati incidunt, quae rerum, accusamus sapiente fuga vero at. Quia, labore, reprehenderit illum dolorem quae facilis reiciendis quas similique totam sequi ducimus temporibus ex nemo, omnis perferendis earum fugit impedit molestias animi vitae.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam neque blanditiis eveniet nesciunt, beatae similique doloribus, ex impedit rem officiis placeat dignissimos molestias temporibus, in! Minima quod, consequatur neque aliquam.</p>
-                                <p class="service-hour">
-                                    <span>Service Hours</span>
-                                    <strong>7:30 AM - 8:00 PM</strong>
-                                </p>
+                                <h3 class="heading">{{ __('site.facilities.1') }}</h3>
+                                <p>{{ __('site.facilities.text-1') }}</p>
                             </div>
                         </div>
                     </div>
@@ -166,93 +142,11 @@
                     <div class="container">
                         <div class="row">
                             <div class="col-md-6">
-                                <img src="images/tab_img_2.jpg" class="img-responsive" alt="Image">
+                                <img src="images/tab_img_2.jpg" class="img-responsive" alt="Image" style="width: 100%; height: 333px">
                             </div>
                             <div class="col-md-6">
-                                <span class="super-heading-sm">World Class</span>
-                                <h3 class="heading">Bars</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias officia perferendis modi impedit, rem quasi veritatis. Consectetur obcaecati incidunt, quae rerum, accusamus sapiente fuga vero at. Quia, labore, reprehenderit illum dolorem quae facilis reiciendis quas similique totam sequi ducimus temporibus ex nemo, omnis perferendis earum fugit impedit molestias animi vitae.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam neque blanditiis eveniet nesciunt, beatae similique doloribus, ex impedit rem officiis placeat dignissimos molestias temporibus, in! Minima quod, consequatur neque aliquam.</p>
-                                <p class="service-hour">
-                                    <span>Service Hours</span>
-                                    <strong>7:30 AM - 8:00 PM</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-content" data-tab-content="tab3">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <img src="images/tab_img_3.jpg" class="img-responsive" alt="Image">
-                            </div>
-                            <div class="col-md-6">
-                                <span class="super-heading-sm">World Class</span>
-                                <h3 class="heading">Pick Up</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias officia perferendis modi impedit, rem quasi veritatis. Consectetur obcaecati incidunt, quae rerum, accusamus sapiente fuga vero at. Quia, labore, reprehenderit illum dolorem quae facilis reiciendis quas similique totam sequi ducimus temporibus ex nemo, omnis perferendis earum fugit impedit molestias animi vitae.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam neque blanditiis eveniet nesciunt, beatae similique doloribus, ex impedit rem officiis placeat dignissimos molestias temporibus, in! Minima quod, consequatur neque aliquam.</p>
-                                <p class="service-hour">
-                                    <span>Service Hours</span>
-                                    <strong>7:30 AM - 8:00 PM</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-content" data-tab-content="tab4">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <img src="images/tab_img_4.jpg" class="img-responsive" alt="Image">
-                            </div>
-                            <div class="col-md-6">
-                                <span class="super-heading-sm">World Class</span>
-                                <h3 class="heading">Swimming Pool</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias officia perferendis modi impedit, rem quasi veritatis. Consectetur obcaecati incidunt, quae rerum, accusamus sapiente fuga vero at. Quia, labore, reprehenderit illum dolorem quae facilis reiciendis quas similique totam sequi ducimus temporibus ex nemo, omnis perferendis earum fugit impedit molestias animi vitae.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam neque blanditiis eveniet nesciunt, beatae similique doloribus, ex impedit rem officiis placeat dignissimos molestias temporibus, in! Minima quod, consequatur neque aliquam.</p>
-                                <p class="service-hour">
-                                    <span>Service Hours</span>
-                                    <strong>7:30 AM - 8:00 PM</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-content" data-tab-content="tab5">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <img src="images/tab_img_5.jpg" class="img-responsive" alt="Image">
-                            </div>
-                            <div class="col-md-6">
-                                <span class="super-heading-sm">World Class</span>
-                                <h3 class="heading">Spa</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias officia perferendis modi impedit, rem quasi veritatis. Consectetur obcaecati incidunt, quae rerum, accusamus sapiente fuga vero at. Quia, labore, reprehenderit illum dolorem quae facilis reiciendis quas similique totam sequi ducimus temporibus ex nemo, omnis perferendis earum fugit impedit molestias animi vitae.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam neque blanditiis eveniet nesciunt, beatae similique doloribus, ex impedit rem officiis placeat dignissimos molestias temporibus, in! Minima quod, consequatur neque aliquam.</p>
-                                <p class="service-hour">
-                                    <span>Service Hours</span>
-                                    <strong>7:30 AM - 8:00 PM</strong>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-content" data-tab-content="tab6">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <img src="images/tab_img_6.jpg" class="img-responsive" alt="Image">
-                            </div>
-                            <div class="col-md-6">
-                                <span class="super-heading-sm">World Class</span>
-                                <h3 class="heading">Gym</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias officia perferendis modi impedit, rem quasi veritatis. Consectetur obcaecati incidunt, quae rerum, accusamus sapiente fuga vero at. Quia, labore, reprehenderit illum dolorem quae facilis reiciendis quas similique totam sequi ducimus temporibus ex nemo, omnis perferendis earum fugit impedit molestias animi vitae.</p>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam neque blanditiis eveniet nesciunt, beatae similique doloribus, ex impedit rem officiis placeat dignissimos molestias temporibus, in! Minima quod, consequatur neque aliquam.</p>
-                                <p class="service-hour">
-                                    <span>Service Hours</span>
-                                    <strong>7:30 AM - 8:00 PM</strong>
-                                </p>
+                                <h3 class="heading">{{ __('site.facilities.2') }}</h3>
+                                <p>{{ __('site.facilities.text-2') }}</p>
                             </div>
                         </div>
                     </div>
@@ -262,6 +156,17 @@
     </div>
 </div>
 
+<div id="place" style="clear: both; margin-bottom: 5em;">
+    <div class="container">
+        <div class="section-title text-center" style="margin-bottom: 0">
+            <h2>{{ __('site.location') }}</h2>
+            <hr>
+        </div>
+        <div class="maps">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3943.0109742117775!2d115.1741377509511!3d-8.785036693659348!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd244900b9318fd%3A0x9796a34293835fa4!2sKawaii%20Apartments!5e0!3m2!1sen!2sid!4v1644518363742!5m2!1sen!2sid" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+    </div>
+</div>
 
 @endsection
 

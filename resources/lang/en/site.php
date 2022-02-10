@@ -22,5 +22,15 @@ return [
     'proses-bayar' => 'Payment Process',
     'img-bukti' => 'Payment Proof',
 
-    'swal-bayar' => 'Payment successful. <br> Please wait 1x24 hours, the admin will confirm your payment.'
+    'swal-bayar' => 'Payment successful. <br> Please wait 1x24 hours, the admin will confirm your payment.',
+
+    'facilities' => [
+        'title' => 'Our Facilities',
+        '1' => 'Laundry',
+        '2' => 'Parking',
+        'text-1' => 'LoremLorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias officia perferendis modi impedit, rem quasi veritatis. Consectetur obcaecati incidunt, quae rerum, accusamus sapiente fuga vero at. Quia, labore, reprehenderit illum dolorem quae facilis reiciendis quas similique totam sequi ducimus temporibus ex nemo, omnis perferendis earum fugit impedit molestias animi vitae.',
+        'text-2' => 'LoremLorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias officia perferendis modi impedit, rem quasi veritatis. Consectetur obcaecati incidunt, quae rerum, accusamus sapiente fuga vero at. Quia, labore, reprehenderit illum dolorem quae facilis reiciendis quas similique totam sequi ducimus temporibus ex nemo, omnis perferendis earum fugit impedit molestias animi vitae.'
+    ],
+
+    'location' => 'Our Locations',
 ];
