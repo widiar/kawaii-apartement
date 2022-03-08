@@ -202,21 +202,44 @@ $lang = app()->getLocale();
                         <input type="text" required class="form-control" name="tlp"
                             placeholder="{{ __('site.masukkan') }} {{ __('site.telepon') }}" value="{{ @$user->no_tlp }}">
                     </div>
-                    <div class="form-group">
-                        <label for="voucher">{{ __('site.voucher') }}</label>
-                        <input type="text" class="form-control" name="voucher"
-                            placeholder="{{ __('site.masukkan') }} {{ __('site.voucher') }}" value="{{ @$user->no_tlp }}">
-                    </div>
+                    <button type="button" class="btn btn-sm btn-primary m-2" id="apply-promo">{{ __('site.voucher-apply') }}</button>
+                    <span class="text-info info-voucher" style="display: none"></span>
                     <h3>
                         Total {{ __('site.bayar') }} Rp <span class="bayar">{{ number_format($room->harga, '0', '.', '.') }}</span>
                     </h3>
                     <input type="hidden" name="jumlahhari" id="hari">
                     <input type="hidden" id="harga" value="{{ $room->harga }}">
                     <input type="hidden" name="room" value="{{ $room->id }}">
+                    <input type="hidden" name="totalHarga" value="0">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">{{ __('site.bayar') }}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="voucherModal" role="dialog" aria-labelledby="voucherModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Voucher</h3>
+            </div>
+            <form action="{{ route('check.voucher', $lang) }}" id="form-promo" method="POST">
+                @csrf
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="voucher">{{ __('site.voucher') }}</label>
+                        <input type="text" class="form-control" name="voucher" id="voucher" autocomplete="off"
+                            placeholder="{{ __('site.masukkan') }} {{ __('site.voucher') }}" value="{{ @$user->voucher }}">
+                        <span class="text-danger invalid-voucher" style="display: none"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Apply</button>
                 </div>
             </form>
         </div>
@@ -303,10 +326,65 @@ $lang = app()->getLocale();
             $('body').addClass('modal-open');
         }
     });
+
+    $('#apply-promo').click(function(e){
+        e.preventDefault();
+        let jumlahHari = $('#hari').val();
+        if(jumlahHari == ''){
+            Swal.fire(
+                'Oops...',
+                'Silahkan isi tanggal checkin dan checkout terlebih dahulu',
+                'warning'
+            )
+        } else {
+            $('#voucherModal').modal('show');
+        }
+    })
     let urlCheck = `{{ route('api.check.room') }}`
 
     $(document).ready(function(){
         new VenoBox();
+
+        $('#form-promo').validate({
+            rules: {
+                voucher: {
+                    required: true,
+                }
+            },
+            submitHandler: (form, e) => {
+                e.preventDefault();
+                $.ajax({
+                    url: $(form).attr('action'),
+                    method: 'POST',
+                    data: $(form).serialize(),
+                    success: (res) => {
+                        if(res.status == 'success'){
+                            $('#voucherModal').modal('hide');
+                            $('.info-voucher').text('Voucher applied');
+                            $('.info-voucher').show()
+                            let harga = $('#harga').val();
+                            let hari = $('#hari').val();
+                            let totalHarga = parseInt(harga) * parseInt(hari);
+                            let diskon = 0
+                            if(res.voucher.type == 'percentage'){
+                                diskon = (totalHarga * res.voucher.value) / 100;
+                            } else{
+                                diskon = res.voucher.value;
+                            }
+                            totalHarga = totalHarga - diskon;
+                            $('input[name="totalHarga"]').val(totalHarga);
+                            $('.bayar').text(toRupiah(totalHarga));
+                        } else{
+                            $('.invalid-voucher').text(res.message);
+                            $('.invalid-voucher').show();
+                        }
+                    },
+                    error: (res) => {
+                        console.log(res.responseJSON)
+                    }
+                })
+            }
+        })
 
         $('#form-reservasi').validate({
             rules: {
@@ -372,6 +450,7 @@ $lang = app()->getLocale();
                 e.preventDefault()
                 let dataform = new FormData($('#form-reservasi')[0])
                 dataform.append('bukti', $('#bukti')[0].files[0])
+                dataform.append('voucher', $('#voucher').val())
                 //kasi swal
                 Swal.fire({
                     title: 'Loading',

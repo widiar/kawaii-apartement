@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Banner;
 use App\Models\Reservasi;
 use App\Models\Room;
+use App\Models\Voucher;
 use Illuminate\Http\Request;
 
 class SiteController extends Controller
@@ -34,6 +35,10 @@ class SiteController extends Controller
             }
             $totalHarga = $room->harga * $request->jumlahhari;
             $bukti = $request->bukti;
+            $voucher = NULL;
+            if($request->voucher) {
+                $voucher = Voucher::where('code', $request->voucher)->first()->id;
+            }
             $data = Reservasi::create([
                 'inv' => strtoupper(uniqid('INV/')),
                 'nama' => $request->nama,
@@ -43,8 +48,10 @@ class SiteController extends Controller
                 'room_id' => $id,
                 'checkin' => $request->checkin,
                 'checkout' => $request->checkout,
-                'total_harga' => $totalHarga,
+                'harga' => $room->harga,
+                'total_harga' => $request->totalHarga,
                 'hari' => $request->jumlahhari,
+                'voucher_id' => $voucher,
                 'bukti_bayar' => $bukti->hashName(),
             ]);
             $bukti->storeAs('public/bukti_bayar', $bukti->hashName());
@@ -60,8 +67,66 @@ class SiteController extends Controller
 
     public function invoiceMail(Request $request)
     {
-        $inv = Reservasi::where('inv', urldecode($request->nomor))->where('is_approve', 1)->firstOrFail();
+        $inv = Reservasi::with('promo')->where('inv', urldecode($request->nomor))->where('is_approve', 1)->firstOrFail();
         $inv->load('room');
-        return view('invoice-detail', compact('inv'));
+        $diskon = 0;
+        $code = NULL;
+        if($inv->voucher_id) {
+            if($inv->promo->type == 'percentage'){
+                $diskon = ($inv->harga * $inv->hari) * ($inv->promo->value / 100);
+            } else{
+                $diskon = $inv->promo->value;
+            }
+            $code = $inv->promo->code;
+        }
+        return view('invoice-detail', compact('inv', 'diskon', 'code'));
+    }
+
+    public function checkVoucher(Request $request)
+    {
+        try {
+            $voucher = Voucher::with(['used' => function ($q){
+                $q->where('is_approve', 1);
+            }])->where('code', $request->voucher)->first();
+            if($voucher){
+                if($voucher->status == 1){
+                    if($voucher->used->count() < $voucher->max_use){
+                        if($voucher->start_date <= date('Y-m-d') && $voucher->end_date >= date('Y-m-d')){
+                            $data = [
+                                'type' => $voucher->type,
+                                'value' => $voucher->value,
+                            ];
+                            return response()->json([
+                                'status' => 'success',
+                                'message' => 'Voucher applied',
+                                'voucher' => $data
+                            ]);
+                        } else {
+                            return response()->json([
+                                'status' => 'date',
+                                'message' => 'Voucher date expired'
+                            ]);
+                        }
+                    } else {
+                        return response()->json([
+                            'status' => 'max',
+                            'message' => 'Voucher max use'
+                        ]);
+                    }
+                } else {
+                    return response()->json([
+                        'status' => 'invalid',
+                        'message' => 'Voucher invalid'
+                    ]);
+                }
+            }else {
+                return response()->json([
+                    'status' => 'voucher',
+                    'message' => 'Voucher not found'
+                ]);
+            }
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 500);
+        }
     }
 }

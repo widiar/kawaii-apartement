@@ -15,4 +15,9 @@ class Reservasi extends Model
     {
         return $this->belongsTo(Room::class, 'room_id', 'id');
     }
+
+    public function promo()
+    {
+        return $this->belongsTo(Voucher::class, 'voucher_id', 'id');
+    }
 }

@@ -15,6 +15,7 @@ class AddVoucherIdToReservasiTable extends Migration
     {
         Schema::table('reservasis', function (Blueprint $table) {
             $table->unsignedInteger('voucher_id')->nullable();
+            $table->unsignedInteger('harga')->nullable();
         });
     }
 
@@ -26,7 +27,7 @@ class AddVoucherIdToReservasiTable extends Migration
     public function down()
     {
         Schema::table('reservasis', function (Blueprint $table) {
-            $table->dropColumn('voucher_id');
+            $table->dropColumn(['voucher_id', 'harga']);
         });
     }
 }

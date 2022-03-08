@@ -232,7 +232,7 @@
                                     {{ $inv->hari }}
                                 </td>
                                 <td valign="top" style="padding: 15px; white-space: nowrap; text-align: right;">
-                                    Rp {{ number_format($inv->total_harga, 0, ',', '.') }}
+                                    Rp {{ number_format($inv->harga * $inv->hari, 0, ',', '.') }}
                                 </td>
                             </tr>
 
@@ -269,6 +269,18 @@
                                                 <td style="width: 50%;">
                                                     <table width="100%"
                                                         style="width: 430px; margin-top: 15px; padding: 15px; border-radius: 4px; border: thin solid rgba(0, 0, 0, 0.54); font-size: 14px; font-weight: 600;">
+                                                        @if(!is_null($code))
+                                                        <tr>
+                                                            <td>Promo Code</td>
+                                                            <td style="text-align: right;">
+                                                                {{ $code }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>Diskon</td>
+                                                            <td style="text-align: right;">
+                                                                Rp {{ number_format($diskon, 0, ',', '.') }}</td>
+                                                        </tr>
+                                                        @endif
                                                         <tr>
                                                             <td>Total Bayar</td>
                                                             <td style="text-align: right;">

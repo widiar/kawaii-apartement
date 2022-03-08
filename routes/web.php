@@ -52,6 +52,8 @@ Route::middleware('admin')->group(function(){
             Route::post('generate-voucher', [VoucherController::class, 'generate'])->name('voucher.generate');
             Route::patch('voucher/{id}/change-status', [VoucherController::class, 'changeStatus'])->name('voucher.status');
             Route::resource('voucher', VoucherController::class)->except('show');
+
+            Route::get('check-detail-harga', [ReservasiController::class, 'checkDetailHarga'])->name('check.detail.harga');
         });
     });
 });
@@ -65,4 +67,6 @@ Route::prefix('{language}')->group(function(){
     Route::get('rooms/{id}', [SiteController::class, 'roomDetail'])->name('room.detail');
 
     Route::post('reservasi/{id}', [SiteController::class, 'reservasi'])->name('room.reservasi');
+
+    Route::post('check-voucher', [SiteController::class, 'checkVoucher'])->name('check.voucher');
 });

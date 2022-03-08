@@ -45,7 +45,12 @@
                     <td>{{ $dt->no_telepon }}</td>
                     <td>{{ date('d F Y', strtotime($dt->checkin)) }}</td>
                     <td>{{ date('d F Y', strtotime($dt->checkout)) }}</td>
-                    <td>Rp {{ number_format($dt->total_harga, '0', '.', '.') }}</td>
+                    <td>
+                        Rp {{ number_format($dt->total_harga, '0', '.', '.') }} 
+                        <button data-id="{{ $dt->id }}" class="btn btn-sm btn-primary mx-3 info-harga">
+                            <i class="fas fa-info-circle"></i>
+                        </button>
+                    </td>
                     <td class="text-center">
                         <a href="{{ Storage::url('bukti_bayar/') . $dt->bukti_bayar }}" class="bukti" data-id="{{ $dt->id }}" data-status="{{ $dt->is_approve }}">
                             <button class="btn btn-sm btn-primary"><i class="fas fa-money-check-alt"></i></button>
@@ -80,6 +85,30 @@
             </div>
             <div class="modal-body">
                 <img src="" alt="" class="img-thumbnail bukti-img" style="width: 100%">
+            </div>
+            <div class="modal-footer btn-bukti-aksi">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="infoModal" tabindex="-1" role="dialog" aria-labelledby="pembayaranModal"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="pembayaranModal">Info Pembayaran</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center"><b>Harga: </b><span id="harga"></span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center"><b>Diskon: </b><span id="diskon"></span></li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center"><b>Total Harga: </b><span id="total-harga"></span></li>
+                </ul>
             </div>
             <div class="modal-footer btn-bukti-aksi">
 
@@ -172,6 +201,24 @@
         }
         $('.btn-bukti-aksi').html(element)
         $('#buktiModal').modal('show')
+    })
+
+    $('body').on('click', '.info-harga', function(e){
+        e.preventDefault()
+        const id = $(this).data('id')
+        $.ajax({
+            url: `{{ route('admin.check.detail.harga') }}`,
+            method: 'GET',
+            data: {
+                id: id
+            },
+            success: (res) => {
+                $('#harga').text('Rp ' + toRupiah(res.harga))
+                $('#diskon').text('Rp ' + toRupiah(res.diskon))
+                $('#total-harga').text('Rp ' + toRupiah(res.total_harga))
+                $('#infoModal').modal('show')
+            }
+        })
     })
 
     $(document).on('submit', '#form-reject', function(e){

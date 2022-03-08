@@ -39,4 +39,27 @@ class ReservasiController extends Controller
         $data = Reservasi::orderBy('created_at', 'ASC')->get();
         return view('admin.reservasi.tamu', compact('data'));
     }
+
+    public function checkDetailHarga(Request $request)
+    {
+        try {
+            $data = Reservasi::with('promo')->find($request->id);
+            $diskon = 0;
+            if($data->voucher_id) {
+                if($data->promo->type == 'percentage'){
+                    $diskon = ($data->harga * $data->hari) * ($data->promo->value / 100);
+                } else{
+                    $diskon = $data->promo->value;
+                }
+            }
+            return response()->json([
+                'status' => 'success',
+                'harga' => $data->harga * $data->hari,
+                'total_harga' => $data->total_harga,
+                'diskon' => $diskon
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
 }

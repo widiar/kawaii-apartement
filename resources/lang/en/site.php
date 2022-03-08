@@ -34,4 +34,6 @@ return [
     ],
 
     'location' => 'Our Locations',
+
+    'voucher-apply' => 'Apply Voucher',
 ];

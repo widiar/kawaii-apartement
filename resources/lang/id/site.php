@@ -34,4 +34,6 @@ return [
     ],
 
     'location' => 'Lokasi Kami',
+
+    'voucher-apply' => 'Masukkan Voucher',
 ];
