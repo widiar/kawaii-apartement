@@ -1,77 +1,88 @@
 @extends('admin.template.admin')
 
-@section('title', 'Edit Banner')
-
-@section('css')
-<style>
-    .img-crop {
-        height: 500px !important;
-        width: 100%;
-        object-fit: cover;
-        object-position: center;
-    }
-
-    #edit-image:hover {
-        cursor: pointer;
-    }
-
-    .img-frame {
-        position: relative;
-    }
-
-    #edit-image {
-        position: absolute;
-        bottom: 0;
-        font-size: 18px;
-        background: rgb(71, 71, 71);
-        opacity: 0.8;
-        width: 100%;
-        text-align: center;
-        height: 30px;
-        color: #fff;
-        cursor: pointer;
-    }
-</style>
-@endsection
+@section('title', 'Edit Voucher')
 
 @section('main-content')
 <div class="card shadow mx-3">
     <div class="card-body">
-        <form action="{{ route('admin.banner.update', $data->id) }}" method="post" enctype="multipart/form-data"
-            id="form">
+        <form action="{{ route('admin.voucher.update', $data->id) }}" method="post" enctype="multipart/form-data" id="form">
             @csrf
             @method('PUT')
             <div class="form-group">
-                <label for="title_id">Title (ID)</label>
-                <input type="text" required name="title_id" class="form-control  @error('title_id') is-invalid @enderror"
-                    value="{{ old('title_id', json_decode($data->title)->id) }}">
-                @error('title_id')
+                <label for="name">Name</label>
+                <input type="text" required name="name" class="form-control  @error('name') is-invalid @enderror"
+                    value="{{ old('name', $data->name) }}">
+                @error('name')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
             <div class="form-group">
-                <label for="title_en">Title (EN)</label>
-                <input type="text" required name="title_en" class="form-control  @error('title_en') is-invalid @enderror"
-                    value="{{ old('title_en', json_decode($data->title)->en) }}">
-                @error('title_en')
+                <label for="type">Type</label>
+                <select name="type" class="form-control @error('type') is-invalid @enderror">
+                    <option value="" selected disabled>Type Voucher</option>
+                    <option {{ $data->type == 'percentage' ? 'selected' : '' }} value="percentage">Percentage</option>
+                    <option {{ $data->type == 'fixed' ? 'selected' : '' }} value="fixed">Fixed</option>
+                </select>
+                @error('type')
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
             <div class="form-group">
-                <label for="foto">Foto</label>
-                <div class="img-frame">
-                    <img src="{{ Storage::url('banner/') . $data->foto }}" alt="" class="img-crop">
-                    <div id="edit-image"><strong>Edit Image</strong></div>
+                <label for="code">Code</label>
+                <div class="input-group">
+                    <input type="text" readonly required name="code" class="form-control  @error('code') is-invalid @enderror"
+                    value="{{ old('code', $data->code) }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary btn-sm" id="reload-code" type="button"><i class="fas fa-redo-alt"></i></button>
+                    </div>
                 </div>
-                <input style="display: none;" type="file" name="foto" id="foto" value="{{ old('foto') }}"
-                    accept="image/x-png, image/jpeg">
-                @error("foto")
-                <p class="text-danger">{{ $message }}</p>
+                @error('code')
+                <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
-                <p class="error-foto text-danger" style="display: none"></p>
-                <small id="exampleInputFile" class="form-text text-muted">upload format file .png, .jpg max 5mb.</small>
             </div>
-            <button type="submit" class="btn btn-block btn-primary">Edit</button>
+            <div class="form-group">
+                <label for="value">Value</label>
+                <input type="text" required name="value" class="form-control  @error('value') is-invalid @enderror"
+                    value="{{ old('value', $data->value) }}">
+                @error('value')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="max">Max Used</label>
+                <input type="text" required name="max" class="form-control  @error('max') is-invalid @enderror"
+                    value="{{ old('max', $data->max_use) }}">
+                @error('max')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="start">Date Start</label>
+                <input type="date" required name="start" class="form-control  @error('start') is-invalid @enderror"
+                    value="{{ old('start', $data->start_date) }}">
+                @error('start')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="end">Date End</label>
+                <input type="date" required name="end" class="form-control  @error('end') is-invalid @enderror"
+                    value="{{ old('end', $data->end_date) }}">
+                @error('end')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <div class="form-group">
+                <label for="type">Status</label>
+                <select name="status" class="form-control @error('status') is-invalid @enderror">
+                    <option {{ $data->type == 1 ? 'selected' : '' }} value="1">Aktif</option>
+                    <option {{ $data->type == 0 ? 'selected' : '' }} value="0">Tidak Aktif</option>
+                </select>
+                @error('status')
+                <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+            <button type="submit" class="btn btn-block btn-primary">Update</button>
         </form>
     </div>
 </div>
@@ -81,26 +92,38 @@
 <script>
     $('#form').validate({
         rules: {
-            title_id: 'required',
-            title_en: 'required',
+            name: 'required',
+            type: 'required',
+            code: 'required',
+            value: {
+                required: true,
+                number: true
+            },
+            max: {
+                required: true,
+                digits: true
+            },
+            start: 'required',
+            end: 'required',
+            status: 'required'
         }
     })
-    $("#edit-image").click(function(){
-        $("#foto").click()
-    })
-    $("#foto").change(function(e){
-        let url = URL.createObjectURL(e.target.files[0])
-        $(".img-crop").attr("src", url)
-        $('.error-foto').text('')
-    })
-
-    $('#form').submit(function(e){
-        let error = 0
-
-        if(error == 1){
-            e.preventDefault()
-            return false
-        }
+    $('#reload-code').click(function() {
+        $.ajax({
+            url: `{{ route('admin.voucher.generate') }}`,
+            method: 'POST',
+            beforeSend : () => {
+                $(this).html('<i class="fas fa-spinner fa-spin"></i>')
+                $(this).attr('disabled', 'disabled')
+            },
+            success: (data) => {
+                $('input[name="code"]').val(data.code)
+            },
+            complete: () => {
+                $(this).html('<i class="fas fa-redo-alt"></i>')
+                $(this).removeAttr('disabled')
+            }
+        })
     })
 </script>
 @endsection

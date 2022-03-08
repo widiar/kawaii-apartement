@@ -50,7 +50,7 @@ Route::middleware('admin')->group(function(){
             Route::get('tamu', [ReservasiController::class, 'tamu'])->name('tamu.index');
 
             Route::post('generate-voucher', [VoucherController::class, 'generate'])->name('voucher.generate');
-            Route::resource('voucher', VoucherController::class);
+            Route::resource('voucher', VoucherController::class)->except('show');
         });
     });
 });

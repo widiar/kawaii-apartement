@@ -14,7 +14,9 @@ class VoucherController extends Controller
      */
     public function index()
     {
-        $data = Voucher::orderBy('created_at', 'DESC')->get();
+        $data = Voucher::with(['used' => function ($q){
+            $q->where('is_approve', 1);
+        }])->orderBy('created_at', 'DESC')->get();
         return view('admin.voucher.index', compact('data'));
     }
 
@@ -55,7 +57,7 @@ class VoucherController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'code' => 'required|unique:vouchers',
+            'code' => 'required|unique:vouchers,code',
             'name' => 'required',
             'type' => 'required',
             'value' => 'required',
@@ -96,7 +98,8 @@ class VoucherController extends Controller
      */
     public function edit(Voucher $voucher)
     {
-        //
+        $data = $voucher;
+        return view('admin.voucher.edit', compact('data'));
     }
 
     /**
@@ -108,7 +111,27 @@ class VoucherController extends Controller
      */
     public function update(Request $request, Voucher $voucher)
     {
-        //
+        $request->validate([
+            'code' => 'required|unique:vouchers,code,'.$voucher->id,
+            'name' => 'required',
+            'type' => 'required',
+            'value' => 'required',
+            'max' => 'required',
+            'start' => 'required',
+            'end' => 'required',
+            'status' => 'required',
+        ]);
+        $voucher->update([
+            'name' => $request->name,
+            'type' => $request->type,
+            'code' => $request->code,
+            'value' => $request->value,
+            'max_use' => $request->max,
+            'start_date' => $request->start,
+            'end_date' => $request->end,
+            'status' => $request->status,
+        ]);
+        return redirect()->route('admin.voucher.index')->with('success', 'Voucher updated successfully');
     }
 
     /**

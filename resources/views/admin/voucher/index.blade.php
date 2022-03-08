@@ -51,11 +51,18 @@
                     </td>
                     <td>{{ $dt->code }}</td>
                     <td>{{ $dt->max_use }}</td>
-                    <td>{{ $dt->max_use }}</td>
-                    <td>{{ $dt->start_date }}</td>
+                    <td>{{ $dt->used->count() }}</td>
+                    <td>
+                        {{ date('d F Y', strtotime($dt->start_date)) }}
+                        -   
+                        {{ date('d F Y', strtotime($dt->end_date)) }}
+                    </td>
                     <td class="text-center">
                         <div class="row justify-content-center" style="min-width: 100px">
-                            <form action="{{ route('admin.banner.destroy', $dt->id) }}" method="POST" class="deleted">
+                            <a href="{{ route('admin.voucher.edit', $dt->id) }}" class="mx-3">
+                                <button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
+                            </a>
+                            <form action="{{ route('admin.voucher.destroy', $dt->id) }}" method="POST" class="deleted mx-3">
                                 @method("DELETE")
                                 @csrf
                                 <button class="btn btn-sm btn-danger" type="submit"><i
