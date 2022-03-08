@@ -49,6 +49,15 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.voucher.index') }}"
+                        class="nav-link{{request()->is('admin/voucher*') ? ' active' : '' }}">
+                        <i class="fas fa-ticket-alt"></i>
+                        <p>
+                            Data Voucher
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

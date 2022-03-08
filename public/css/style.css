@@ -8042,7 +8042,7 @@ div.cs-select span {
 #availability {
   background: #FF8FAB;
   width: 100%;
-  top: 1em;
+  top: 5em;
   z-index: 99;
   position: relative;
   display: inline-block;
@@ -8411,7 +8411,7 @@ div.cs-select span {
 #fh5co-services-section,
 #fh5co-contact-section,
 #footer {
-  padding: 5em 0;
+  padding: 7em 0;
 }
 
 #hotel-facilities {
@@ -8868,7 +8868,7 @@ input[type="text"] {
 }
 
 .section-title {
-  margin-bottom: 5em;
+  /* margin-bottom: 5em; */
   float: left;
   width: 100%;
   z-index: 99;

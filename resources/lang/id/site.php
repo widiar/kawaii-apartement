@@ -14,6 +14,7 @@ return [
     'masukkan' => 'Masukkan',
     'telepon' => 'No. Telepon',
     'bayar' => 'Pembayaran',
+    'voucher' => 'Voucher',
     'info-email' => 'Pastikan email aktif dikarenakan bukti pembayaran akan dikirimkan ke email',
 
     'trf-bank' => 'Silahkan Transfer ke Bank BCA',

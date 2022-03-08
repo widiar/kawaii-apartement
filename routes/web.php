@@ -5,6 +5,7 @@ use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ReservasiController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\VoucherController;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +48,9 @@ Route::middleware('admin')->group(function(){
             Route::post('reservasi/update', [ReservasiController::class, 'updateStatus'])->name('reservasi.status');
 
             Route::get('tamu', [ReservasiController::class, 'tamu'])->name('tamu.index');
+
+            Route::post('generate-voucher', [VoucherController::class, 'generate'])->name('voucher.generate');
+            Route::resource('voucher', VoucherController::class);
         });
     });
 });

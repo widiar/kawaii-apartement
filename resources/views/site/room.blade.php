@@ -154,7 +154,7 @@ $lang = app()->getLocale();
                     </ul>
                 </div>
                 <div class="price">
-                    <h2>{{ __('site.price') }} Rp {{ number_format($room->harga, 0, ',', '.') }}</h2>
+                    <h2>{{ __('site.price') }} Rp {{ number_format($room->harga, 0, ',', '.') }} /{{ __('site.txt-night') }}</h2>
                 </div>
                 <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#bayarModal">{{ __('site.btn-book') }}</button>
             </div>
@@ -202,6 +202,14 @@ $lang = app()->getLocale();
                         <input type="text" required class="form-control" name="tlp"
                             placeholder="{{ __('site.masukkan') }} {{ __('site.telepon') }}" value="{{ @$user->no_tlp }}">
                     </div>
+                    <div class="form-group">
+                        <label for="voucher">{{ __('site.voucher') }}</label>
+                        <input type="text" class="form-control" name="voucher"
+                            placeholder="{{ __('site.masukkan') }} {{ __('site.voucher') }}" value="{{ @$user->no_tlp }}">
+                    </div>
+                    <h3>
+                        Total {{ __('site.bayar') }} Rp <span class="bayar">{{ number_format($room->harga, '0', '.', '.') }}</span>
+                    </h3>
                     <input type="hidden" name="jumlahhari" id="hari">
                     <input type="hidden" id="harga" value="{{ $room->harga }}">
                     <input type="hidden" name="room" value="{{ $room->id }}">
@@ -337,8 +345,7 @@ $lang = app()->getLocale();
                                 Swal.close()
                                 console.log(res)
                                 if(res.status == 200) {
-                                    $('#bayarModal').modal('hide')
-                                    $('.bayar').text(toRupiah($('#hari').val() * $('#harga').val()))
+                                    $('#bayarModal').modal('hide')                                    
                                     $('#transaksiModal').modal('show')
                                 } else {
                                     Swal.fire({
@@ -437,6 +444,7 @@ $lang = app()->getLocale();
             let cekin = dayjs($("#checkin").val())
             let cekot = dayjs(selected.date.valueOf())
             $('#hari').val((cekot.diff(cekin, 'day')))
+            $('.bayar').text(toRupiah($('#hari').val() * $('#harga').val()))
         })
     })
 
