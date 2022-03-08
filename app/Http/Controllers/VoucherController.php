@@ -134,6 +134,16 @@ class VoucherController extends Controller
         return redirect()->route('admin.voucher.index')->with('success', 'Voucher updated successfully');
     }
 
+    public function changeStatus(Request $request, $id)
+    {
+        $voucher = Voucher::find($id);
+        $status = $voucher->status == 1 ? 0 : 1;
+        $voucher->update([
+            'status' => $status,
+        ]);
+        return response()->json('Success');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
@@ -142,6 +152,7 @@ class VoucherController extends Controller
      */
     public function destroy(Voucher $voucher)
     {
-        //
+        $voucher->delete();
+        return response()->json('Sukses');
     }
 }

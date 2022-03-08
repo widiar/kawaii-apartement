@@ -62,6 +62,18 @@
                             <a href="{{ route('admin.voucher.edit', $dt->id) }}" class="mx-3">
                                 <button class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></button>
                             </a>
+                            <form action="{{ route('admin.voucher.status', $dt->id) }}" method="POST" class="change-status">
+                                @method('PATCH')
+                                @csrf
+                                <input type="hidden" name="status" value="{{ $dt->status }}">
+                                <button class="btn btn-sm btn-{{ $dt->status == 1 ? 'danger' : 'success'}}">
+                                    @if($dt->status == 1)
+                                    <i class="fas fa-times-circle"></i>
+                                    @else
+                                    <i class="fas fa-check-circle"></i>
+                                    @endif
+                                </button>
+                            </form>
                             <form action="{{ route('admin.voucher.destroy', $dt->id) }}" method="POST" class="deleted mx-3">
                                 @method("DELETE")
                                 @csrf
@@ -89,4 +101,40 @@
 @endsection
 
 @section('script')
+<script>
+    $('body').on('submit', '.change-status', function(e){
+        e.preventDefault();
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes!'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: 'PATCH',
+                    success: (res) => {
+                        Swal.fire({
+                            title: 'Success!',
+                            text: `The status data has been changed.`,
+                            icon: 'success',
+                            showConfirmButton: false,
+                            timer: 1500
+                        }).then((result) => {
+                            window.location.href = "";
+                        }) 
+                    },
+                    error: (res) => {
+                        Swal.fire("Oops", "Something Wrong!", "error");
+                        console.log(res.responseJSON)
+                    }
+                })
+            }
+        })
+    })
+</script>
 @endsection
