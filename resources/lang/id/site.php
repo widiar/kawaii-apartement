@@ -28,9 +28,11 @@ return [
     'facilities' => [
         'title' => 'Fasilitas Kami',
         '1' => 'Laundry',
-        '2' => 'Parking',
-        'text-1' => 'LoremLorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias officia perferendis modi impedit, rem quasi veritatis. Consectetur obcaecati incidunt, quae rerum, accusamus sapiente fuga vero at. Quia, labore, reprehenderit illum dolorem quae facilis reiciendis quas similique totam sequi ducimus temporibus ex nemo, omnis perferendis earum fugit impedit molestias animi vitae.',
-        'text-2' => 'LoremLorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias officia perferendis modi impedit, rem quasi veritatis. Consectetur obcaecati incidunt, quae rerum, accusamus sapiente fuga vero at. Quia, labore, reprehenderit illum dolorem quae facilis reiciendis quas similique totam sequi ducimus temporibus ex nemo, omnis perferendis earum fugit impedit molestias animi vitae.'
+        '2' => 'Parkir',
+        '3' => 'Wifi',
+        'text-1' => 'Laundry merupakan salah satu fasilitas dari Apartemen kawaii yang memiliki tugas dan tanggungjawab terhadap semua cucian yang diterima baik dari guest laundry(tamu) ataupun house laundry. Dengan adanya fasilitas laundry, pihak apartemen kawaii memiliki tujuan untuk membantu dan menciptakan kenyamanan tamu dalam beraktivitas.',
+        'text-2' => 'Apartemen kawaii memiliki fasilitas parkir yang cukup luas sehingga mempermudah para tamu untuk memarkirkan setiap kendaraannnya karena setiap satu kamar sudah difasilitasi satu parkir agar tamu tidak perlu lagi bingung mencari tempat parkir.',
+        'text-3' => 'Apartemen kawaii memberikan fasilitas jaringan gratis di dalam ruangan. Adanya jaringan internet dalam ruangan yang diberikan secara gratis tentu saja membuat para tamu apartemen kawaii tetap bisa berselancar di dunia maya dengan leluasa. Bahkan bagi para tamu apartemen kawaii yang senantiasa menjalankan bisnis tentu dapat berkomunikasi dengan lancar.',
     ],
 
     'location' => 'Lokasi Kami',

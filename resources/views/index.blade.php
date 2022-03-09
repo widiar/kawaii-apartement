@@ -123,6 +123,10 @@
                     <i class="fas fa-parking icon"></i>
                     <span>{{ __('site.facilities.2') }}</span>
                 </a>
+                <a href="#" data-tab="tab3">
+                    <i class="fas fa-wifi icon"></i>
+                    <span>{{ __('site.facilities.3') }}</span>
+                </a>
             </nav>
             <div class="tab-content-container">
                 <div class="tab-content active show" data-tab-content="tab1">
@@ -147,6 +151,19 @@
                             <div class="col-md-6">
                                 <h3 class="heading">{{ __('site.facilities.2') }}</h3>
                                 <p>{{ __('site.facilities.text-2') }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-content" data-tab-content="tab3">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="images/tab_img_2.jpg" class="img-responsive" alt="Image" style="width: 100%; height: 333px">
+                            </div>
+                            <div class="col-md-6">
+                                <h3 class="heading">{{ __('site.facilities.3') }}</h3>
+                                <p>{{ __('site.facilities.text-3') }}</p>
                             </div>
                         </div>
                     </div>

@@ -29,8 +29,10 @@ return [
         'title' => 'Our Facilities',
         '1' => 'Laundry',
         '2' => 'Parking',
-        'text-1' => 'LoremLorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias officia perferendis modi impedit, rem quasi veritatis. Consectetur obcaecati incidunt, quae rerum, accusamus sapiente fuga vero at. Quia, labore, reprehenderit illum dolorem quae facilis reiciendis quas similique totam sequi ducimus temporibus ex nemo, omnis perferendis earum fugit impedit molestias animi vitae.',
-        'text-2' => 'LoremLorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias officia perferendis modi impedit, rem quasi veritatis. Consectetur obcaecati incidunt, quae rerum, accusamus sapiente fuga vero at. Quia, labore, reprehenderit illum dolorem quae facilis reiciendis quas similique totam sequi ducimus temporibus ex nemo, omnis perferendis earum fugit impedit molestias animi vitae.'
+        '3' => 'Wifi',
+        'text-1' => 'Laundry is one of the facilities of Kawaii Apartments which has duties and responsibilities for all laundry received from guest laundry (guests) or house laundry. With laundry facilities, Kawaii Apartments has a goal to help and create guest comfort in their activities.',
+        'text-2' => 'Kawaii apartments have parking facilities that are wide enough to make it easier for guests to park each vehicle because each room has been facilitated by one parking lot so that guests no longer need to be confused about finding a parking space.',
+        'text-3' => 'Kawaii apartment provides free network facilities in the room. The existence of an indoor internet network that is provided for free of course makes the guests of the kawaii apartment able to surf the virtual world freely. Even for guests of kawaii apartments who are always running a business, of course, they can communicate smoothly.',
     ],
 
     'location' => 'Our Locations',
