@@ -210,7 +210,7 @@ $lang = app()->getLocale();
                     <input type="hidden" name="jumlahhari" id="hari">
                     <input type="hidden" id="harga" value="{{ $room->harga }}">
                     <input type="hidden" name="room" value="{{ $room->id }}">
-                    <input type="hidden" name="totalHarga" value="0">
+                    <input type="hidden" name="totalHarga" value="{{ $room->harga }}">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -523,7 +523,9 @@ $lang = app()->getLocale();
             let cekin = dayjs($("#checkin").val())
             let cekot = dayjs(selected.date.valueOf())
             $('#hari').val((cekot.diff(cekin, 'day')))
-            $('.bayar').text(toRupiah($('#hari').val() * $('#harga').val()))
+            let totalHarga = $('#hari').val() * $('#harga').val()
+            $('.bayar').text(toRupiah(totalHarga))
+            $('input[name="totalHarga"]').val(totalHarga);
         })
     })
 
