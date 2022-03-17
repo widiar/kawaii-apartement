@@ -62,4 +62,35 @@ class ReservasiController extends Controller
             return response()->json($th->getMessage(), 500);
         }
     }
+
+    public function xenditInvoiceCallback(Request $request)
+    {
+        $callbackToken = $request->header('x-callback-token');
+        if($callbackToken == env('XENDIT_CALLBACK_TOKEN')){
+            $responseArray = $request->json()->all();
+            $data = Reservasi::where('inv', $responseArray['external_id'])
+                ->first();
+            if($data){
+                Mail::to($data->email)->send(new PaymentApproveMail($data));
+                
+                $data->is_approve = 1;
+                $data->save();
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Sucess',
+                    'data' => $data
+                ]);            
+            }else{
+                return response()->json([
+                    'status' => 'failed',
+                    'message' => 'Invoice Not Found',
+                ]);            
+            }
+        }else{
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Wrong callback token'
+            ]);
+        }
+    }
 }

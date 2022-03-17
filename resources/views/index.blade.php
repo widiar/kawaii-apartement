@@ -198,6 +198,12 @@
     </div>
 </div>
 
+@if(session('callback-success'))
+	<div class="alert alert-success callback" style="display: none">
+		{{session('callback-success')}}
+	</div>
+@endif
+
 @endsection
 
 @section('javascript')
@@ -213,6 +219,19 @@
         format: 'yyyy-mm-dd',
         orientation: 'auto bottom',
         autoclose: true,
+    })
+
+    $(document).ready(function(e){
+        let cekcallback = $('.callback').html()
+		if (cekcallback != undefined){
+			Swal.fire({
+				title: 'Success',
+				icon: 'success',
+				html: `Pembayaran berhasil. Silahkan cek email anda untuk melihat bukti transaksi. <br>`,
+			}).then(res => {
+				if(res.isConfirmed) window.location.href = '/'
+			})
+		}
     })
 
     $('#form-check-ava').validate({

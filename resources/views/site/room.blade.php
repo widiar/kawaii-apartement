@@ -201,7 +201,7 @@ $lang = app()->getLocale();
             <div class="modal-header">
                 <h3 class="modal-title" id="pembayaranModal">Detail</h3>
             </div>
-            <form action="#" method="POST" id="form-reservasi">
+            <form action="{{ route('room.reservasi', [$lang, $room->id]) }}" method="POST" id="form-reservasi">
                 @csrf
                 <div class="modal-body">
                     <div class="form-group">
@@ -439,7 +439,9 @@ $lang = app()->getLocale();
             },
             submitHandler: (form, e) => {
                 e.preventDefault()
-                console.log($(form).serialize())
+                // console.log($(form).serialize())
+                let dataform = new FormData($('#form-reservasi')[0])
+                dataform.append('voucher', $('#voucher').val())
                 Swal.fire({
                     title: 'Checking',
                     timer: 20000,
@@ -449,15 +451,17 @@ $lang = app()->getLocale();
                         Swal.showLoading()
                         Swal.stopTimer()
                         $.ajax({
-                            url: urlCheck,
-                            data: $(form).serialize(),
+                            url: $(form).attr('action'),
+                            data: dataform,
                             type: 'POST',
+                            contentType: false, 
+                            processData: false,
                             success: (res) => {
                                 Swal.close()
                                 console.log(res)
                                 if(res.status == 200) {
-                                    $('#bayarModal').modal('hide')                                    
-                                    $('#transaksiModal').modal('show')
+                                    // xendit
+                                    window.location.href = res.data.invoice_url
                                 } else {
                                     Swal.fire({
                                         title: 'Sorry',

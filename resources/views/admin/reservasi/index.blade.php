@@ -28,7 +28,6 @@
                     <th>Checkin</th>
                     <th>Checkout</th>
                     <th>Total Harga</th>
-                    <th class="text-center">Bukti Bayar</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -52,15 +51,10 @@
                         </button>
                     </td>
                     <td class="text-center">
-                        <a href="{{ Storage::url('bukti_bayar/') . $dt->bukti_bayar }}" class="bukti" data-id="{{ $dt->id }}" data-status="{{ $dt->is_approve }}">
-                            <button class="btn btn-sm btn-primary"><i class="fas fa-money-check-alt"></i></button>
-                        </a>
-                    </td>
-                    <td class="text-center">
                         @if($dt->is_approve == 0)
-                        <h3 class="badge badge-secondary">Reviewed</h3>
+                        <h3 class="badge badge-secondary">Not Paid</h3>
                         @elseif($dt->is_approve == 1)
-                        <h3 class="badge badge-success">Approved</h3>
+                        <h3 class="badge badge-success">Paid</h3>
                         @else
                         <h3 class="badge badge-danger">Rejected</h3>
                         @endif

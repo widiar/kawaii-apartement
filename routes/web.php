@@ -32,6 +32,7 @@ Route::get('admin/login', function(){
     return view('admin.login');
 })->name('login');
 Route::post('admin/login', [AuthController::class, 'login']);
+Route::post('callback-xendit', [ReservasiController::class, 'xenditInvoiceCallback']);
 
 Route::middleware('admin')->group(function(){
     Route::name('admin.')->group(function(){

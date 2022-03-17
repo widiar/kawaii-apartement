@@ -2,16 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PaymentApproveMail;
 use App\Models\Banner;
 use App\Models\Reservasi;
 use App\Models\Room;
 use App\Models\Voucher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Mail;
+use Xendit\Invoice as XenditInvoice;
+use Xendit\Xendit;
 
 class SiteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if(isset($request->callback)){
+            $invnumber = Crypt::decryptString($request->callback);
+            $data = Reservasi::where('id', $invnumber)->first();
+            $request->session()->flash('callback-success', 'Pembayaran Berhasil');
+            if($data){
+                //kirim email dll
+                if(env('APP_ENV') == 'local') {
+                    Mail::to($data->email)->send(new PaymentApproveMail($data));
+                    
+                    $data->is_approve = 1;
+                    $data->save();
+                }
+                $request->session()->flash('callback-success', 'Pembayaran Berhasil');
+            }
+        } else{
+            $request->session()->forget('callback-success');
+        }
         $banner = Banner::all();
         $rooms = Room::with('image')->get();
         return view('index', compact('banner', 'rooms'));
@@ -27,14 +50,15 @@ class SiteController extends Controller
     {
         try {
             $room = Room::find($id);
-            if($room->checkSisa($request->checkin) <= 0) {
-                return response()->json([
-                    'status' => 'room',
-                    'message' => 'Room not avaliable'
-                ]);
+            $cek = $room;
+            if($cek->checkSisa($request->checkin) <= 0){
+                return [
+                    'status' => 203,
+                    'message' => 'Room not avaliable',
+                    'data' => $cek->checkSisa($request->checkin)
+                ];
             }
             $totalHarga = $room->harga * $request->jumlahhari;
-            $bukti = $request->bukti;
             $voucher = NULL;
             if($request->voucher) {
                 $voucher = Voucher::where('code', $request->voucher)->first()->id;
@@ -52,11 +76,24 @@ class SiteController extends Controller
                 'total_harga' => $request->totalHarga,
                 'hari' => $request->jumlahhari,
                 'voucher_id' => $voucher,
-                'bukti_bayar' => $bukti->hashName(),
+                'bukti_bayar' => 'xendit',
             ]);
-            $bukti->storeAs('public/bukti_bayar', $bukti->hashName());
+            Xendit::setApiKey(env('XENDIT_SECRET_KEY'));
+            $params = [
+                'external_id' => $data->inv,
+                'amount' => $data->total_harga,
+                'customer' => [
+                    'given_names' => $data->nama,
+                    'email' => $data->email
+                ],
+                'payer_email' => $data->email,
+                'success_redirect_url' => route('home', ['language' => App::getLocale(),'callback' => Crypt::encryptString($data->id)]),
+                'currency' => 'IDR'
+            ];
+            $xenInv = XenditInvoice::create($params);
             return response()->json([
-                'status' => 'success'
+                'status' => 200,
+                'data' => $xenInv
             ]);
         } catch (\Throwable $th) {
             // $data->delete();
