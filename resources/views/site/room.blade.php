@@ -1,6 +1,7 @@
 @extends('template.master')
 
 @section('css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <style>
     .img-crop {
         height: 440px !important;
@@ -135,30 +136,62 @@ $lang = app()->getLocale();
 @endphp
 <div id="fh5co-hotel-section">
     <div class="container">
-        <div class="row">
-            <div class="col-md-4">
-                @foreach ($room->image as $item)
-                <a class="venobox" data-gall="roomPhotos" href="{{Storage::url('rooms/image/') . $item->image}}" style="display: {{ ($loop->first) ? '' : 'none' }}">
-                    <img src="{{Storage::url('rooms/image/') . $item->image}}" alt="" class="img-thumbnail w-100" style="height: 300px;object-fit: cover;object-position: center;">
-                </a>
-                @endforeach
-            </div>
-            <div class="col-md-8">
-                <h1>{{ $room->jenis }}</h1>
-                <div class="fasilitas">
-                    <h2 style="margin: 0">{{ __('site.fasilitas') }}</h2>
-                    <ul>
-                        @foreach (explode("|", json_decode($room->fasilitas)->$lang) as $fs)
-                            <li>{{ $fs }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-                <div class="price">
-                    <h2>{{ __('site.price') }} Rp {{ number_format($room->harga, 0, ',', '.') }} /{{ __('site.txt-night') }}</h2>
-                </div>
-                <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#bayarModal">{{ __('site.btn-book') }}</button>
-            </div>
+        <div class="text-center">
+            <h1>{{ $room->jenis }}</h1>
+            @foreach ($room->image as $item)
+            <a class="venobox" data-gall="roomPhotos" href="{{Storage::url('rooms/image/') . $item->image}}" style="display: {{ ($loop->first) ? '' : 'none' }}">
+                <img src="{{ Storage::url('rooms/image/') . $item->image }}" alt="" class="img-thumbnail w-100" style="height: 300px;object-fit: cover;object-position: center;">
+            </a>
+            @endforeach
         </div>
+        <div class="price text-center" style="margin-top: 50px">
+            <h2>{{ __('site.price') }} Rp {{ number_format($room->harga, 0, ',', '.') }} /{{ __('site.txt-night') }}</h2>
+        </div>
+        <div id="hotel-facilities">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="section-title text-center">
+                            <h2>{{ __('site.facilities.title') }}</h2>
+                        </div>
+                    </div>
+                </div>
+        
+                <div id="tabs">
+                    <nav class="tabs-nav">
+                        @php
+                            $w = (100)/count(json_decode($room->fasilitas));
+                            $c = 1;
+                            $lang = app()->getLocale();
+                        @endphp
+                        @foreach(json_decode($room->fasilitas) as $fasilitas)
+                        <a href="#" class="@if($loop->first)active @endif" data-tab="tab{{ $c++ }}" style="width: {{ $w }}%">
+                            <i class="fa fa-{{ strtolower($fasilitas->icon) }} icon"></i>
+                            <span>{{ $fasilitas->title->$lang }}</span>
+                        </a>
+                        @endforeach
+                    </nav>
+                    @php
+                        $i = 1;
+                    @endphp
+                    <div class="tab-content-container">
+                        @foreach(json_decode($room->fasilitas) as $fasilitas)
+                        <div class="tab-content @if($loop->first)active show @endif" data-tab-content="tab{{ $i++ }}">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h3 class="heading">{{ $fasilitas->title->$lang }}</h3>
+                                        <p>{{ $fasilitas->description->$lang }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </div>        
+        <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#bayarModal">{{ __('site.btn-book') }}</button>
     </div>
 </div>
 

@@ -28,7 +28,7 @@ return [
     'hotel-info' => 'Informasi Hotel',
 
     'facilities' => [
-        'title' => 'Fasilitas Kami',
+        'title' => 'Fasilitas',
         '1' => 'Laundry',
         '2' => 'Parkir',
         '3' => 'Wifi',

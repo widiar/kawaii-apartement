@@ -28,7 +28,7 @@ return [
     'hotel-info' => 'Hotel Information',
 
     'facilities' => [
-        'title' => 'Our Facilities',
+        'title' => 'Facilities',
         '1' => 'Laundry',
         '2' => 'Parking',
         '3' => 'Wifi',
