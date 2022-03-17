@@ -3,6 +3,7 @@
 @section('title', 'Tambah Kamar')
 
 @section('css')
+
 <style>
     .img-crop {
         height: 200px !important;
@@ -64,27 +65,58 @@
                 <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="limit">Fasilitas (ID) <span class="badge badge-pill badge-secondary" title="Pisahkan dengan tanda |"><i class="fa fa-question"></i></span></label>
-                        <input type="text" required name="fasilitas_id" class="form-control  @error('fasilitas_id') is-invalid @enderror"
-                            value="{{ old('fasilitas_id') }}">
-                        @error('fasilitas_id')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+            <div class="fasilitas">
+                <div class="isi-fasilitas">
+                    <div class="fasilitas-container">
+                        <div class="icon">
+                            <div class="form-group">
+                                <label for="icon_fasilitas">Icon</label>
+                                <select name="icon_fasilitas[]" class="form-control icon_fasilitas">
+                                    <option value=""></option>
+                                    <option value='utensils'>Food</option>
+                                    <option value="shower">Shower</option>
+                                    <option value="bed">Bed</option>
+                                    <option value="fan">AC</option>
+                                </select>
+                            </div>
+                            <div class="icon-display text-center m-4" style="display: none">
+                                <i class="fas fa-utensils" style="font-size: 100px"></i>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="nama_fasilitas_id">Nama Fasilitas (ID)</label>
+                                    <input type="text" name="nama_fasilitas_id[]" class="form-control nama_fasilitas_id"
+                                        value="{{ old('nama_fasilitas_id') }}">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="nama_fasilitas_en">Nama Fasilitas (EN)</label>
+                                    <input type="text" name="nama_fasilitas_en[]" class="form-control nama_fasilitas_en"
+                                        value="{{ old('nama_fasilitas_en') }}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="deskripsi_fasilitas">Deskripsi (ID)</label>
+                                    <textarea name="deskripsi_fasilitas_id[]" cols="30" rows="5" class="form-control"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="deskripsi_fasilitas">Deskripsi (EN)</label>
+                                    <textarea name="deskripsi_fasilitas_en[]" cols="30" rows="5" class="form-control"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label for="limit">Fasilitas (EN) <span class="badge badge-pill badge-secondary" title="Pisahkan dengan tanda |"><i class="fa fa-question"></i></span></label>
-                        <input type="text" required name="fasilitas_en" class="form-control  @error('fasilitas_en') is-invalid @enderror"
-                            value="{{ old('fasilitas_en') }}">
-                        @error('fasilitas_en')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-                </div>
+                <button type="button" class="btn btn-sm btn-primary btn-add-fasilitas">Tambah Fasilitas</button>
             </div>
             <div class="form-group">
                 <label for="text">Foto Kamar</label>
@@ -158,6 +190,82 @@
         changeLabelFoto()
     })
 
+    const initiateIconFasilitas = () => {
+        $('.icon_fasilitas').select2({
+            placeholder: 'Pilih Icon',
+            allowClear: true,
+            width: '100%',
+            tags: true,
+            theme: 'bootstrap4'
+        })
+    }
+
+    initiateIconFasilitas()
+
+    $('body').on('change', '.icon_fasilitas', function(e) {
+        $(this).parents('.icon').find('.icon-display').html(`<i class="fas fa-${$(this).val().toLowerCase()}" style="font-size: 100px"></i>`)
+        $(this).parents('.icon').find('.icon-display').show(300)
+    })
+
+    $('body').on('click', '.btn-delete-fasilitas', function(e) {
+        $(this).parent().remove()
+    })
+
+    $('.btn-add-fasilitas').click(function(){
+        const htmlFas = `
+        <div class="fasilitas-container">
+            <div class="icon">
+                <div class="form-group">
+                    <label for="icon_fasilitas">Icon</label>
+                    <select name="icon_fasilitas[]" class="form-control icon_fasilitas">
+                        <option value=""></option>
+                        <option value='utensils'>Food</option>
+                        <option value="shower">Shower</option>
+                        <option value="bed">Bed</option>
+                        <option value="fan">AC</option>
+                    </select>
+                </div>
+                <div class="icon-display text-center m-4" style="display: none">
+                    <i class="fas fa-utensils" style="font-size: 100px"></i>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nama_fasilitas_id">Nama Fasilitas (ID)</label>
+                        <input type="text" name="nama_fasilitas_id[]" class="form-control nama_fasilitas_id"
+                            value="{{ old('nama_fasilitas_id') }}">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="nama_fasilitas_en">Nama Fasilitas (EN)</label>
+                        <input type="text" name="nama_fasilitas_en[]" class="form-control nama_fasilitas_en"
+                            value="{{ old('nama_fasilitas_en') }}">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="deskripsi_fasilitas">Deskripsi (ID)</label>
+                        <textarea name="deskripsi_fasilitas_id[]" cols="30" rows="5" class="form-control"></textarea>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="deskripsi_fasilitas">Deskripsi (EN)</label>
+                        <textarea name="deskripsi_fasilitas_en[]" cols="30" rows="5" class="form-control"></textarea>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-danger btn-sm btn-delete-fasilitas">Hapus</button>
+            <hr>
+        </div>`
+        $('.isi-fasilitas').append(htmlFas)
+        initiateIconFasilitas()
+    })
+
     $('#form').validate({
         rules: {
             jenis: 'required',
@@ -169,8 +277,11 @@
                 required: true,
                 number: true
             },
-            fasilitas_id: 'required',
-            fasilitas_en: 'required',
+            'icon_fasilitas[]': 'required',
+            'nama_fasilitas_id[]': 'required',
+            'nama_fasilitas_en[]': 'required',
+            'deskripsi_fasilitas_id[]': 'required',
+            'deskripsi_fasilitas_en[]': 'required',
             'foto[]': 'required',
         },
         submitHandler: function(form, e) {

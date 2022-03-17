@@ -146,7 +146,7 @@
     <script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
     <script src="{{ asset('plugins/datepicker/js/bootstrap-datepicker.js') }}"></script>
 
-    <script src="{{ asset('plugins/jquery-validation/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('plugins/jquery-validation/jquery.validate.js') }}"></script>
     <script src="{{ asset('plugins/jquery-validation/additional-methods.min.js') }}"></script>
 
     <script src="{{ asset('dist/js/admin.js') }}"></script>

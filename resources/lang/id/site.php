@@ -25,6 +25,8 @@ return [
 
     'swal-bayar' => 'Pembayaran berhasil. <br> Silahkan Menunggu 1x24 jam, Admin Akan Mengkonfirmasi Pembayaran Anda.',
 
+    'hotel-info' => 'Informasi Hotel',
+
     'facilities' => [
         'title' => 'Fasilitas Kami',
         '1' => 'Laundry',

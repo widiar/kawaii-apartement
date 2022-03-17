@@ -25,6 +25,8 @@ return [
 
     'swal-bayar' => 'Payment successful. <br> Please wait 1x24 hours, the admin will confirm your payment.',
 
+    'hotel-info' => 'Hotel Information',
+
     'facilities' => [
         'title' => 'Our Facilities',
         '1' => 'Laundry',

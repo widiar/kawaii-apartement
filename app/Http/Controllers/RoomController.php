@@ -39,14 +39,25 @@ class RoomController extends Controller
     public function store(Request $request)
     {
         try {
+            $fasilitas = [];
+            foreach($request->icon_fasilitas as $key => $value) {
+                array_push($fasilitas, [
+                    'icon' => $value,
+                    'title' => [
+                        'id' => $request->nama_fasilitas_id[$key],
+                        'en' => $request->nama_fasilitas_en[$key],
+                    ],
+                    'description' => [
+                        'id' => $request->deskripsi_fasilitas_id[$key],
+                        'en' => $request->deskripsi_fasilitas_en[$key],
+                    ],
+                ]);
+            }
             $data = Room::create([
                 'jenis' => $request->jenis,
                 'harga' => str_replace(',', '', $request->harga),
                 'jumlah' => $request->jumlah,
-                'fasilitas' => json_encode([
-                    'id' => $request->fasilitas_id,
-                    'en' => $request->fasilitas_en,
-                ]),
+                'fasilitas' => json_encode($fasilitas),
             ]);
             //save foto
             foreach ($request->fotofile as $file) {
@@ -83,6 +94,7 @@ class RoomController extends Controller
     public function edit($id)
     {
         $data = Room::with('image')->find($id);
+        // dd(json_decode($data->fasilitas));
         return view('admin.room.edit', compact('data'));
     }
 
@@ -96,14 +108,25 @@ class RoomController extends Controller
     public function update(Request $request, $id)
     {
         try {
+            $fasilitas = [];
+            foreach($request->icon_fasilitas as $key => $value) {
+                array_push($fasilitas, [
+                    'icon' => $value,
+                    'title' => [
+                        'id' => $request->nama_fasilitas_id[$key],
+                        'en' => $request->nama_fasilitas_en[$key],
+                    ],
+                    'description' => [
+                        'id' => $request->deskripsi_fasilitas_id[$key],
+                        'en' => $request->deskripsi_fasilitas_en[$key],
+                    ],
+                ]);
+            }
             $data = Room::find($id);
             $data->jenis = $request->jenis;
             $data->harga = str_replace(',', '', $request->harga);
             $data->jumlah = $request->jumlah;
-            $data->fasilitas = json_encode([
-                'id' => $request->fasilitas_id,
-                'en' => $request->fasilitas_en,
-            ]);
+            $data->fasilitas = json_encode($fasilitas);
 
             //save foto
             if(isset($request->fotofile)){

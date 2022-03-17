@@ -108,12 +108,25 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="section-title text-center">
-                    <h2>{{ __('site.facilities.title') }}</h2>
+                    <h2>{{ __('site.hotel-info') }}</h2>
                 </div>
             </div>
         </div>
 
-        <div id="tabs">
+        <hr>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="images/tab_img_1.jpg" class="img-responsive" alt="Image" style="width: 100%; height: 333px;">
+                </div>
+                <div class="col-md-6">
+                    <p>{{ __('site.facilities.text-1') }}</p>
+                </div>
+            </div>
+        </div>
+
+        {{-- <div id="tabs">
             <nav class="tabs-nav">
                 <a href="#" class="active" data-tab="tab1">
                     <i class="fas fa-hands-wash icon"></i>
@@ -169,7 +182,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 </div>
 
