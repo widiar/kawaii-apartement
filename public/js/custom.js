@@ -232,7 +232,7 @@ $(function(){
       contentWayPoint();
       mobileMenuOutsideClick();
       parallax();
-      copy();
+      // copy();
       fullHeight();
       counter();
    });
