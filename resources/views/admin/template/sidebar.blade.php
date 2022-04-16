@@ -58,6 +58,15 @@
                         </p>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{ route('admin.laporan') }}"
+                        class="nav-link{{request()->is('admin/laporan*') ? ' active' : '' }}">
+                        <i class="fas fa-ticket-alt"></i>
+                        <p>
+                            Laporan Bulanan
+                        </p>
+                    </a>
+                </li>
             </ul>
         </nav>
         <!-- /.sidebar-menu -->

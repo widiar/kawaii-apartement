@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\LaporanExport;
 use App\Mail\PaymentApproveMail;
 use App\Mail\PaymentRejectMail;
+use App\Models\Laporan;
 use App\Models\Reservasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReservasiController extends Controller
 {
@@ -38,6 +42,44 @@ class ReservasiController extends Controller
     {
         $data = Reservasi::orderBy('created_at', 'ASC')->get();
         return view('admin.reservasi.tamu', compact('data'));
+    }
+
+    public function laporan()
+    {
+        $data = Laporan::all();
+        return view('admin.laporan.index', compact('data'));
+    }
+
+    public function postLaporan(Request $request)
+    {
+        try {
+            $cek = Laporan::where('bulan', '01-' . $request->tanggal)->first();
+            if($cek) {
+                return response()->json('Ada');
+            }
+            $bulan = explode('-', $request->tanggal)[0];
+            $tahun = explode('-', $request->tanggal)[1];
+            Excel::store(new LaporanExport($bulan, $tahun), 'laporan' . $request->tanggal . '.xlsx', 'public');
+            Laporan::create([
+                'name' => 'laporan' . $request->tanggal . '.xlsx',
+                'bulan' => '01-' . $request->tanggal,
+            ]);
+            return response()->json('Success');
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 500);
+        }
+    }
+
+    public function deleteLaporan($id)
+    {
+        try {
+            $data = Laporan::find($id);
+            Storage::disk('public')->delete($data->name);
+            $data->delete();
+            return response()->json('Sukses');
+        } catch (\Throwable $th) {
+            return response()->json($th->getMessage(), 500);
+        }
     }
 
     public function checkDetailHarga(Request $request)

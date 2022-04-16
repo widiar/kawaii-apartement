@@ -55,6 +55,10 @@ Route::middleware('admin')->group(function(){
             Route::resource('voucher', VoucherController::class)->except('show');
 
             Route::get('check-detail-harga', [ReservasiController::class, 'checkDetailHarga'])->name('check.detail.harga');
+
+            Route::get('laporan', [ReservasiController::class, 'laporan'])->name('laporan');
+            Route::post('laporan', [ReservasiController::class, 'postLaporan'])->name('laporan.post');
+            Route::delete('laporan/{id}', [ReservasiController::class, 'deleteLaporan'])->name('laporan.delete');
         });
     });
 });
