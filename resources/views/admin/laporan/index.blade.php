@@ -77,7 +77,7 @@
                     <label for="bulan">Bulan</label>
                     <div class="input-group">
                         <input type="text" id="tgl" name="tanggal" class="form-control datepicker"
-                            value="{{ date('m-Y') }}">
+                            value="{{ date('Y-m') }}">
                         <div class="input-group-append">
                             <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
                         </div>
