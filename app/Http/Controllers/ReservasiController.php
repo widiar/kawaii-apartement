@@ -53,7 +53,7 @@ class ReservasiController extends Controller
     public function postLaporan(Request $request)
     {
         try {
-            $cek = Laporan::where('bulan', '01-' . $request->tanggal)->first();
+            $cek = Laporan::where('bulan', $request->tanggal . '-01')->first();
             if($cek) {
                 return response()->json('Ada');
             }
@@ -62,7 +62,7 @@ class ReservasiController extends Controller
             Excel::store(new LaporanExport($bulan, $tahun), 'laporan' . $request->tanggal . '.xlsx', 'public');
             Laporan::create([
                 'name' => 'laporan' . $request->tanggal . '.xlsx',
-                'bulan' => '01-' . $request->tanggal,
+                'bulan' => $request->tanggal . '-01',
             ]);
             return response()->json('Success');
         } catch (\Throwable $th) {
