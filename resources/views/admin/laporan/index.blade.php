@@ -102,7 +102,7 @@
         });
     })
     $(".datepicker").datepicker({
-        format: 'mm-yyyy',
+        format: 'yyyy-mm',
         todayBtn: "linked",
         startView: "months", 
         minViewMode: "months",
