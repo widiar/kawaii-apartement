@@ -61,7 +61,7 @@
                 <li class="nav-item">
                     <a href="{{ route('admin.laporan') }}"
                         class="nav-link{{request()->is('admin/laporan*') ? ' active' : '' }}">
-                        <i class="fas fa-ticket-alt"></i>
+                        <i class="fas fa-chart-line"></i>
                         <p>
                             Laporan Bulanan
                         </p>
