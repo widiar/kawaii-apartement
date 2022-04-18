@@ -57,8 +57,8 @@ class ReservasiController extends Controller
             if($cek) {
                 return response()->json('Ada');
             }
-            $bulan = explode('-', $request->tanggal)[0];
-            $tahun = explode('-', $request->tanggal)[1];
+            $bulan = explode('-', $request->tanggal)[1];
+            $tahun = explode('-', $request->tanggal)[0];
             Excel::store(new LaporanExport($bulan, $tahun), 'laporan' . $request->tanggal . '.xlsx', 'public');
             Laporan::create([
                 'name' => 'laporan' . $request->tanggal . '.xlsx',
