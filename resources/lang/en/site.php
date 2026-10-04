@@ -26,6 +26,7 @@ return [
     'swal-bayar' => 'Payment successful. <br> Please wait 1x24 hours, the admin will confirm your payment.',
 
     'hotel-info' => 'Hotel Information',
+    'hotel-info-dsc' => 'A “kawaii” apartment refers to a living space themed around the cute, cheerful, and aesthetically pleasing elements of Japanese pop culture, often featuring pastel colors, soft decor, and functional furniture with a sweet, charming style.',
 
     'facilities' => [
         'title' => 'Facilities',

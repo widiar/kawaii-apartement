@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Routing\UrlGenerator;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,10 +25,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        UrlGenerator::macro('setLanguage', function($language){
+        if (config('app.env') !== 'local') {
+            URL::forceScheme('https');
+        }
+        UrlGenerator::macro('setLanguage', function ($language) {
             $currentRoute = app('router')->current();
             $newRouteParameters = array_merge(
-                $currentRoute->parameters(), compact('language')
+                $currentRoute->parameters(),
+                compact('language')
             );
             return $this->route($currentRoute->getName(), $newRouteParameters);
         });

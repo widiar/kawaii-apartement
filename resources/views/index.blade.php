@@ -15,7 +15,7 @@
 @endsection
 @section('main-content')
 <aside id="fh5co-hero" class="js-fullheight">
-    <div class="flexslider js-fullheight">
+    <div class="flexslider js-fullheight" style="width: 100%">
         <ul class="slides">
             @php
                 $lang = app()->getLocale();
@@ -129,10 +129,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-6">
-                    <img src="images/tab_img_1.jpg" class="img-responsive" alt="Image" style="width: 100%; height: 333px;">
+                    <img src="images/tab_img_1x.jpg" class="img-responsive" alt="Image" style="width: 100%; height: 333px;">
                 </div>
                 <div class="col-md-6">
-                    <p>{{ __('site.facilities.text-1') }}</p>
+                    <p>{{ __('site.hotel-info-dsc') }}</p>
                 </div>
             </div>
         </div>

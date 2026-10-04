@@ -56,6 +56,11 @@
 		}
 	}
 
+    @media (min-width: 768px){
+        .modal-dialog {
+            margin: 30vh auto !important;
+        }
+    }
 
 
     .slideshow-container {
@@ -102,6 +107,10 @@
         -webkit-animation-duration: 1.5s;
         animation-name: fade;
         animation-duration: 1.5s;
+    }
+
+    .show {
+        opacity: 1;
     }
 
     @-webkit-keyframes faded {
@@ -196,7 +205,7 @@ $lang = app()->getLocale();
 </div>
 
 <div class="modal fade" id="bayarModal" tabindex="-1" role="dialog" aria-labelledby="pembayaranModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="pembayaranModal">Detail</h3>
@@ -255,7 +264,7 @@ $lang = app()->getLocale();
 </div>
 
 <div class="modal fade" id="voucherModal" role="dialog" aria-labelledby="voucherModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title">Voucher</h3>
@@ -280,7 +289,7 @@ $lang = app()->getLocale();
 </div>
 
 <div class="modal fade" id="transaksiModal" data-backdrop="static" role="dialog" aria-labelledby="pembayaranModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="pembayaranModal">{{ __('site.bayar') }}</h3>
@@ -330,7 +339,7 @@ $lang = app()->getLocale();
 </div>
 
 <div class="modal fade" id="imageModal" role="dialog" aria-labelledby="pembayaranModal" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="pembayaranModal">{{ __('site.img-bukti') }}</h3>

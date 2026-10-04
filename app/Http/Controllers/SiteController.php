@@ -18,21 +18,21 @@ class SiteController extends Controller
 {
     public function index(Request $request)
     {
-        if(isset($request->callback)){
+        if (isset($request->callback)) {
             $invnumber = Crypt::decryptString($request->callback);
             $data = Reservasi::where('id', $invnumber)->first();
             $request->session()->flash('callback-success', 'Pembayaran Berhasil');
-            if($data){
+            if ($data) {
                 //kirim email dll
-                if(env('APP_ENV') == 'local') {
+                if (env('APP_ENV') == 'local') {
                     Mail::to($data->email)->send(new PaymentApproveMail($data));
-                    
+
                     $data->is_approve = 1;
                     $data->save();
                 }
                 $request->session()->flash('callback-success', 'Pembayaran Berhasil');
             }
-        } else{
+        } else {
             $request->session()->forget('callback-success');
         }
         $banner = Banner::all();
@@ -51,7 +51,7 @@ class SiteController extends Controller
         try {
             $room = Room::find($id);
             $cek = $room;
-            if($cek->checkSisa($request->checkin) <= 0){
+            if ($cek->checkSisa($request->checkin) <= 0) {
                 return [
                     'status' => 203,
                     'message' => 'Room not avaliable',
@@ -60,7 +60,7 @@ class SiteController extends Controller
             }
             $totalHarga = $room->harga * $request->jumlahhari;
             $voucher = NULL;
-            if($request->voucher) {
+            if ($request->voucher) {
                 $voucher = Voucher::where('code', $request->voucher)->first()->id;
             }
             $data = Reservasi::create([
@@ -80,14 +80,14 @@ class SiteController extends Controller
             ]);
             Xendit::setApiKey(env('XENDIT_SECRET_KEY'));
             $params = [
-                'external_id' => $data->inv,
+                'external_id' => "KAWAII_APARTEMENT-" . $data->inv,
                 'amount' => $data->total_harga,
                 'customer' => [
                     'given_names' => $data->nama,
                     'email' => $data->email
                 ],
                 'payer_email' => $data->email,
-                'success_redirect_url' => route('home', ['language' => App::getLocale(),'callback' => Crypt::encryptString($data->id)]),
+                'success_redirect_url' => route('home', ['language' => App::getLocale(), 'callback' => Crypt::encryptString($data->id)]),
                 'currency' => 'IDR'
             ];
             $xenInv = XenditInvoice::create($params);
@@ -100,7 +100,7 @@ class SiteController extends Controller
             return response()->json($th->getMessage(), 500);
         }
     }
-    
+
 
     public function invoiceMail(Request $request)
     {
@@ -108,10 +108,10 @@ class SiteController extends Controller
         $inv->load('room');
         $diskon = 0;
         $code = NULL;
-        if($inv->voucher_id) {
-            if($inv->promo->type == 'percentage'){
+        if ($inv->voucher_id) {
+            if ($inv->promo->type == 'percentage') {
                 $diskon = ($inv->harga * $inv->hari) * ($inv->promo->value / 100);
-            } else{
+            } else {
                 $diskon = $inv->promo->value;
             }
             $code = $inv->promo->code;
@@ -122,13 +122,13 @@ class SiteController extends Controller
     public function checkVoucher(Request $request)
     {
         try {
-            $voucher = Voucher::with(['used' => function ($q){
+            $voucher = Voucher::with(['used' => function ($q) {
                 $q->where('is_approve', 1);
             }])->where('code', $request->voucher)->first();
-            if($voucher){
-                if($voucher->status == 1){
-                    if($voucher->used->count() < $voucher->max_use){
-                        if($voucher->start_date <= date('Y-m-d') && $voucher->end_date >= date('Y-m-d')){
+            if ($voucher) {
+                if ($voucher->status == 1) {
+                    if ($voucher->used->count() < $voucher->max_use) {
+                        if ($voucher->start_date <= date('Y-m-d') && $voucher->end_date >= date('Y-m-d')) {
                             $data = [
                                 'type' => $voucher->type,
                                 'value' => $voucher->value,
@@ -156,7 +156,7 @@ class SiteController extends Controller
                         'message' => 'Voucher invalid'
                     ]);
                 }
-            }else {
+            } else {
                 return response()->json([
                     'status' => 'voucher',
                     'message' => 'Voucher not found'

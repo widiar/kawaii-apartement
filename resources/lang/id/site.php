@@ -26,6 +26,7 @@ return [
     'swal-bayar' => 'Pembayaran berhasil. <br> Silahkan Menunggu 1x24 jam, Admin Akan Mengkonfirmasi Pembayaran Anda.',
 
     'hotel-info' => 'Informasi Hotel',
+    'hotel-info-dsc' => 'Kawaii apartment merujuk pada konsep hunian bertema imut, ceria, dan estetik ala budaya populer Jepang, sering kali menggunakan warna pastel, dekorasi lembut, serta furnitur fungsional bergaya manis.',
 
     'facilities' => [
         'title' => 'Fasilitas',
